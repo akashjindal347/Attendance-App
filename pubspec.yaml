@@ -33,6 +33,8 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_sparkline:
+  flutter_staggered_grid_view:
 
 
 

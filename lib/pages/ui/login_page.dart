@@ -363,7 +363,7 @@ class _LoginPageState extends State<LoginPage>
                             fontFamily: "WorkSansBold"),
                       ),
                     ),
-                    onPressed: () =>Navigator.pushReplacementNamed(context, '/main')),
+                    onPressed: () =>Navigator.pushReplacementNamed(context, '/home')),
               ),
             ],
           ),

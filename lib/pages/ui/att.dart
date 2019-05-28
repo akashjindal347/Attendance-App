@@ -4,13 +4,13 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 
 
-class MainPage extends StatefulWidget
+class HomePage extends StatefulWidget
 {
   @override
   _MainPageState createState() => _MainPageState();
 }
 
-class _MainPageState extends State<MainPage>
+class _MainPageState extends State<HomePage>
 {
   final List<List<double>> charts =
   [
@@ -26,6 +26,7 @@ class _MainPageState extends State<MainPage>
   @override
   Widget build(BuildContext context)
   {
+    var count=78;
     return Scaffold
     (
       appBar: AppBar
@@ -46,7 +47,7 @@ class _MainPageState extends State<MainPage>
         children: <Widget>[
 
 
-          _buildTile(
+          /*_buildTile(
             GestureDetector(
 
             onTap: ()=>Navigator.pushReplacementNamed(context, '/mark'),
@@ -86,10 +87,10 @@ class _MainPageState extends State<MainPage>
                   ]
               ),
             ),)
-          ),
+          ),*/
           
         
-          _buildTile(
+          /*_buildTile(
             GestureDetector(
 
             onTap: ()=>Navigator.pushReplacementNamed(context, '/mark'),
@@ -118,7 +119,7 @@ class _MainPageState extends State<MainPage>
                         color: Colors.red,
                         borderRadius: BorderRadius.circular(24.0),
                         child: GestureDetector(
-                           onTap: ()=>Navigator.pushReplacementNamed(context, '/login'),
+                           onTap: ()=>Navigator.pushReplacementNamed(context, '/mark'),
                           child: Center
                           (
                             child: Padding
@@ -135,7 +136,10 @@ class _MainPageState extends State<MainPage>
           _buildTile(
             GestureDetector(
 
-            onTap: ()=>Navigator.pushReplacementNamed(context, '/mark'),
+            onTap: (){
+              count=count+2;
+              Navigator.pushReplacementNamed(context, '/mark');
+              },
             child:Padding
               (
               padding: const EdgeInsets.all(24.0),
@@ -164,7 +168,7 @@ class _MainPageState extends State<MainPage>
                             child: Padding
                               (
                               padding: EdgeInsets.all(16.0),
-                              child: Icon(Icons.store, color: Colors.white, size: 30.0),
+                              child: Icon(Icons.add, color: Colors.white, size: 30.0),
                             )
                         )
                     )
@@ -172,11 +176,19 @@ class _MainPageState extends State<MainPage>
               ),
             ),
             ),
-          ),
+          ),*/
           _buildTile(
+            
             GestureDetector(
 
-            onTap: ()=>Navigator.pushReplacementNamed(context, '/mark'),
+            onTap: ()
+            {
+              setState((){
+                  count=count+2;
+              });
+              
+            Navigator.pushReplacementNamed(context, '/mark');
+            },
             child:Padding
               (
               padding: const EdgeInsets.all(24.0),
@@ -194,7 +206,7 @@ class _MainPageState extends State<MainPage>
                       [
 
                          Text('UTA001', style: TextStyle(color: Colors.black, fontWeight: FontWeight.w700, fontSize: 30.0)),
-                        Text('74%', style: TextStyle(color: Colors.blue, fontWeight: FontWeight.w700, fontSize: 20.0))
+                        Text('${count}%', style: TextStyle(color: Colors.blue, fontWeight: FontWeight.w700, fontSize: 20.0)),
                       ],
                     ),
                     Material
@@ -206,7 +218,7 @@ class _MainPageState extends State<MainPage>
                             child: Padding
                               (
                               padding: EdgeInsets.all(16.0),
-                              child: Icon(Icons.store, color: Colors.white, size: 30.0),
+                              child: Icon(Icons.add, color: Colors.white, size: 30.0),
                             )
                         )
                     )
@@ -215,7 +227,7 @@ class _MainPageState extends State<MainPage>
             ),
           ),),
 
-          _buildTile(
+          /*_buildTile(
             GestureDetector(
 
             onTap: ()=>Navigator.pushReplacementNamed(context, '/mark'),
@@ -248,24 +260,24 @@ class _MainPageState extends State<MainPage>
                             child: Padding
                               (
                               padding: EdgeInsets.all(16.0),
-                              child: Icon(Icons.store, color: Colors.white, size: 30.0),
+                              child: Icon(Icons.add, color: Colors.white, size: 30.0),
                             )
                         )
                     )
                   ]
               ),
             ),
-          ),),
+          ),),*/
           
           
         ],
         staggeredTiles: [
          
          StaggeredTile.extent(2, 110.0),
+         /*StaggeredTile.extent(2, 110.0),
          StaggeredTile.extent(2, 110.0),
          StaggeredTile.extent(2, 110.0),
-         StaggeredTile.extent(2, 110.0),
-         StaggeredTile.extent(2, 110.0),
+         StaggeredTile.extent(2, 110.0),*/
           
           
         ],
