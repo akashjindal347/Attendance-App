@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'pages/main_page.dart';
-import 'pages/create_course.dart';
+import 'package:attendance_app/components/teacher/create_course.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget
