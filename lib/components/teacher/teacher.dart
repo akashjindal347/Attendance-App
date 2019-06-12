@@ -91,15 +91,18 @@ class _TeacherState extends State<Teacher> {
             Container(
               height: MediaQuery.of(context).size.height * 0.72,
               child: Query(options: QueryOptions(document: """
-          query teacherCourses{
-            teacherCourses {
-              name
-              code
-              token
-              strength
-            }
-          }
-          """, variables: <String, dynamic> {}, pollInterval: 100, fetchPolicy: FetchPolicy.noCache), builder: (QueryResult result, {VoidCallback refetch}) {
+                query teacherCourses{
+                  teacherCourses {
+                    name
+                    year
+                    branch
+                    group
+                    code
+                    token
+                    strength
+                  }
+                }
+                """, variables: <String, dynamic> {}, pollInterval: 100, fetchPolicy: FetchPolicy.noCache), builder: (QueryResult result, {VoidCallback refetch}) {
                 if(result.errors != null) {
                   return Center(
                     child: Text(result.errors.toString()),
@@ -132,7 +135,7 @@ class _TeacherState extends State<Teacher> {
                                   ListTile(
                                     leading: Icon(Icons.music_note),
                                     title: Text('Create Session'),
-                                    onTap: () => {createSessionScanerio(model, courses[index]["token"])},
+                                    onTap: () => {createSessionScanerio(model, courses[index]["token"], courses[index]["name"], courses[index]["year"], courses[index]["branch"], courses[index]["group"])},
                                   ),
                                   ListTile(
                                     leading: Icon(Icons.music_note),
@@ -161,16 +164,6 @@ class _TeacherState extends State<Teacher> {
                                       Text('${courses[index]["name"]}', style: TextStyle(color: Colors.redAccent)),
                                     ],
                                   ),
-                                  Material (
-                                    color: Colors.red,
-                                    borderRadius: BorderRadius.circular(24.0),
-                                    child: Center (
-                                      child: Padding (
-                                        padding: EdgeInsets.all(16.0),
-                                        child: Icon(Icons.add, color: Colors.white, size: 30.0),
-                                      )
-                                    )
-                                  )
                                 ]
                               ),
                             )
@@ -188,8 +181,12 @@ class _TeacherState extends State<Teacher> {
       );
   }
 
-  createSessionScanerio (model, token) {
+  createSessionScanerio (model, token, courseName, courseYear, courseBranch, courseGroup) {
     model.setCourseToken(token);
+    model.setCourseName(courseName);
+    model.setCourseYear(courseYear);
+    model.setCourseBranch(courseBranch);
+    model.setCourseGroup(courseGroup);
     Navigator.pushNamed(context, '/createSess');
   }
 
@@ -198,7 +195,7 @@ class _TeacherState extends State<Teacher> {
     Navigator.pushNamed(context, '/sessions');
   }
 
-  goToCourse (model, token, name, code, strength) {
+  goToCourse (model, token, code, name, strength) {
     model.setCourseToken(token);
     model.setCourseCode(code);
     model.setCourseName(name);

@@ -3,7 +3,7 @@ import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:scoped_model/scoped_model.dart';
 import '../../models/AppModel.dart';
 
-class Session extends StatelessWidget {
+class Sessions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
