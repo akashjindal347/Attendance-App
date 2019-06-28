@@ -4,6 +4,7 @@ class AppModel extends Model {
   String _token;
   String _id;
 
+  String _courseId;
   String _courseToken;
   String _courseCode;
   String _courseName;
@@ -17,6 +18,7 @@ class AppModel extends Model {
   String get token => _token;
   String get id => _id;
 
+  String get courseId => _courseId;
   String get courseToken => _courseToken;
   String get courseCode => _courseCode;
   String get courseName => _courseName;
@@ -35,6 +37,12 @@ class AppModel extends Model {
 
   void setId(String t) {
     _id = t;
+
+    notifyListeners();
+  }
+
+  void setCourseId (String t) {
+    _courseId = t;
 
     notifyListeners();
   }

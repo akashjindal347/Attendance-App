@@ -18,6 +18,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:scoped_model/scoped_model.dart';
 import '../../models/AppModel.dart';
+import './Attendance.dart';
 
 class Teacher extends StatefulWidget {
   @override
@@ -93,6 +94,7 @@ class _TeacherState extends State<Teacher> {
               child: Query(options: QueryOptions(document: """
                 query teacherCourses{
                   teacherCourses {
+                    _id
                     name
                     year
                     branch
@@ -135,17 +137,17 @@ class _TeacherState extends State<Teacher> {
                                   ListTile(
                                     leading: Icon(Icons.music_note),
                                     title: Text('Create Session'),
-                                    onTap: () => {createSessionScanerio(model, courses[index]["token"], courses[index]["name"], courses[index]["year"], courses[index]["branch"], courses[index]["group"])},
+                                    onTap: () => {createSessionScanerio(model, courses[index]['token'], courses[index]['_id'], courses[index]['name'], courses[index]["year"], courses[index]["branch"], courses[index]["group"])},
                                   ),
                                   ListTile(
                                     leading: Icon(Icons.music_note),
-                                    title: Text('Previous Sessions'),
-                                    onTap: () => {goToPreviousSessions(model, courses[index]["code"])},
+                                    title: Text('Attendance View'),
+                                    onTap: () => {goToAttendanceView(model, courses[index]['_id'], courses[index]['code'])},
                                   ),
                                   ListTile(
                                     leading: Icon(Icons.photo_album),
                                     title: Text('Course Information'),
-                                    onTap: () => {goToCourse(model, courses[index]["token"], courses[index]["code"], courses[index]["name"], courses[index]["strength"])},
+                                    onTap: () => {goToCourse(model, courses[index]['token'], courses[index]['_id'], courses[index]['code'], courses[index]["name"], courses[index]["strength"])},
                                   ),
                                 ],
                               );
@@ -181,8 +183,9 @@ class _TeacherState extends State<Teacher> {
       );
   }
 
-  createSessionScanerio (model, token, courseName, courseYear, courseBranch, courseGroup) {
+  createSessionScanerio (model, token, id, courseName, courseYear, courseBranch, courseGroup) {
     model.setCourseToken(token);
+    model.setCourseId(id);
     model.setCourseName(courseName);
     model.setCourseYear(courseYear);
     model.setCourseBranch(courseBranch);
@@ -190,13 +193,20 @@ class _TeacherState extends State<Teacher> {
     Navigator.pushNamed(context, '/createSess');
   }
 
-  goToPreviousSessions (model, code) {
+  goToAttendanceView (model, id, code) {
+    model.setCourseId(id);
     model.setCourseCode(code);
-    Navigator.pushNamed(context, '/sessions');
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (BuildContext context) => Attendance(courseCode: code, courseId: id)
+        )
+    );
   }
 
-  goToCourse (model, token, code, name, strength) {
+  goToCourse (model, token, id, code, name, strength) {
     model.setCourseToken(token);
+    model.setCourseId(id);
     model.setCourseCode(code);
     model.setCourseName(name);
     model.setCourseStrength(strength);

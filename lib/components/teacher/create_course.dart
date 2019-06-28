@@ -1,3 +1,4 @@
+//// BASIC
 import 'package:flutter/material.dart';
 
 //GraphQL
@@ -27,12 +28,14 @@ class _CreateCourseState extends State<CreateCourse> {
   String _branch;
   String _group;
   String typeDropDownSelect;
-
+  
+  String _specialCourse;
+  
+  List <DropdownMenuItem<String>> specialCourseDropList = [DropdownMenuItem(child: Text('None'), value: 'null',), DropdownMenuItem(child: Text('Summer Semester'), value: 'Summer Semester',)];
   List <DropdownMenuItem<int>> yearDropList = [];
   List <DropdownMenuItem<String>> branchDropList = [];
   List <DropdownMenuItem<String>> groupDropList = [];
   List <DropdownMenuItem<String>> typeDropList = [DropdownMenuItem(child: Text("L"), value: 'L',), DropdownMenuItem(child: Text("T"), value: 'T',), DropdownMenuItem(child: Text("P"), value: 'P',)];
-
 
   TextEditingController courseNameController = new TextEditingController();
   TextEditingController courseCodeController = new TextEditingController();
@@ -46,6 +49,9 @@ class _CreateCourseState extends State<CreateCourse> {
     yearDropList = [];
     branchDropList = [];
     groupDropList = [];
+    if(_specialCourse != null) {
+      return;
+    }
     yearDropList.add(DropdownMenuItem(child: Text('1st year'), value: 1,));
     yearDropList.add(DropdownMenuItem(child: Text('2nd year'), value: 2,));
     yearDropList.add(DropdownMenuItem(child: Text('3rd year'), value: 3,));
@@ -95,76 +101,155 @@ class _CreateCourseState extends State<CreateCourse> {
         branchDropList.add(DropdownMenuItem(child: Text('BTD'), value: 'BTD',));
       }
       if(_branch != null) {
-        if(_branch == 'COE') {
-          for(int i = 0; i < 28; i++) {
-            groupDropList.add(DropdownMenuItem(child: Text('COE-${i+1}'), value: 'COE-${i+1}',),);
+        if(typeDropDownSelect == 'L') {
+          if(_year != 1) {
+            if(_branch == 'COE') {
+              groupDropList.add(DropdownMenuItem(child: Text('COE 1-4'), value: 'COE 1-4',));
+              groupDropList.add(DropdownMenuItem(child: Text('COE 5-8'), value: 'COE 5-8',));
+              groupDropList.add(DropdownMenuItem(child: Text('COE 9-12'), value: 'COE 9-12',));
+              groupDropList.add(DropdownMenuItem(child: Text('COE 13-16'), value: 'COE 13-16',));
+              groupDropList.add(DropdownMenuItem(child: Text('COE 17-20'), value: 'COE 17-20',));
+              groupDropList.add(DropdownMenuItem(child: Text('COE 21-24'), value: 'COE 21-24',));
+              groupDropList.add(DropdownMenuItem(child: Text('COE 25-28'), value: 'COE 25-28',));
+            }
+            else if(_branch == 'BTD') {
+              groupDropList.add(DropdownMenuItem(child: Text('BTD 1-3'), value: 'BTD 1-3',));
+            }
+            else if(_branch == 'ECE') {
+              groupDropList.add(DropdownMenuItem(child: Text('ECE 1-4'), value: 'ECE 1-4',));
+              groupDropList.add(DropdownMenuItem(child: Text('ECE 5-8'), value: 'ECE 5-8',));
+            }
+            else if(_branch == 'ENC') {
+              groupDropList.add(DropdownMenuItem(child: Text('ENC 1-4'), value: 'ENC 1-4',));
+              groupDropList.add(DropdownMenuItem(child: Text('ENC 5-8'), value: 'ENC 5-8',));
+            }
+            else if(_branch == 'CHE') {
+              groupDropList.add(DropdownMenuItem(child: Text('CHE 1-2'), value: 'CHE 1-2',));
+            }
+            else if(_branch == 'EIC') {
+              groupDropList.add(DropdownMenuItem(child: Text('EIC 1-3'), value: 'EIC 1-3',));
+            }
+            else if(_branch == 'CIE') {
+              groupDropList.add(DropdownMenuItem(child: Text('CIE 1-4'), value: 'CIE 1-4',));
+            }
+            else if(_branch == 'MEE') {
+              groupDropList.add(DropdownMenuItem(child: Text('MEE 1-4'), value: 'MEE 1-4',));
+              groupDropList.add(DropdownMenuItem(child: Text('MEE 5-8'), value: 'MEE 5-8',));
+              groupDropList.add(DropdownMenuItem(child: Text('MEE 9-12'), value: 'MEE 9-12',));
+            }
+            else if(_branch == 'MTX') {
+              groupDropList.add(DropdownMenuItem(child: Text('MTX 1-2'), value: 'MTX 1-2',));
+            }
+            else if(_branch == 'MPE') {
+              groupDropList.add(DropdownMenuItem(child: Text('MPE 1-2'), value: 'MPE 1-2',));
+            }
+            else if (_branch == 'ELE') {
+              groupDropList.add(DropdownMenuItem(child: Text('ELE 1-4'), value: 'ELE 1-4',));
+            }
+          }
+          else {
+            if(_branch == 'A') {
+              groupDropList.add(DropdownMenuItem(child: Text('A'), value: 'A',));
+              groupDropList.add(DropdownMenuItem(child: Text('B'), value: 'B',));
+              groupDropList.add(DropdownMenuItem(child: Text('C'), value: 'C',));
+              groupDropList.add(DropdownMenuItem(child: Text('D'), value: 'D',));
+              groupDropList.add(DropdownMenuItem(child: Text('E'), value: 'E',));
+              groupDropList.add(DropdownMenuItem(child: Text('F'), value: 'F',));
+              groupDropList.add(DropdownMenuItem(child: Text('G'), value: 'G',));
+              groupDropList.add(DropdownMenuItem(child: Text('H'), value: 'H',));
+              groupDropList.add(DropdownMenuItem(child: Text('I'), value: 'I',));
+              groupDropList.add(DropdownMenuItem(child: Text('J'), value: 'J',));
+            }
+            else {
+              groupDropList.add(DropdownMenuItem(child: Text('K'), value: 'K',));
+              groupDropList.add(DropdownMenuItem(child: Text('L'), value: 'L',));
+              groupDropList.add(DropdownMenuItem(child: Text('M'), value: 'M',));
+              groupDropList.add(DropdownMenuItem(child: Text('N'), value: 'N',));
+              groupDropList.add(DropdownMenuItem(child: Text('O'), value: 'O',));
+              groupDropList.add(DropdownMenuItem(child: Text('P'), value: 'P',));
+              groupDropList.add(DropdownMenuItem(child: Text('Q'), value: 'Q',));
+              groupDropList.add(DropdownMenuItem(child: Text('R'), value: 'R',));
+              groupDropList.add(DropdownMenuItem(child: Text('S'), value: 'S',));
+              groupDropList.add(DropdownMenuItem(child: Text('T'), value: 'T',));
+            }
           }
         }
-        else if(_branch == 'ENC') {
-          for(int i = 0; i < 6; i++) {
-            groupDropList.add(DropdownMenuItem(child: Text('ENC-${i+1}'), value: 'COE-${i+1}',),);
+        else {
+          if(_branch == 'COE') {
+            for(int i = 0; i < 28; i++) {
+              groupDropList.add(DropdownMenuItem(child: Text('COE-${i+1}'), value: 'COE-${i+1}',),);
+            }
           }
-        }
-        else if(_branch == 'ECE') {
-          for(int i = 0; i < 6; i++) {
-            groupDropList.add(DropdownMenuItem(child: Text('ECE-${i+1}'), value: 'COE-${i+1}',),);
+          else if(_branch == 'ENC') {
+            for(int i = 0; i < 6; i++) {
+              groupDropList.add(DropdownMenuItem(child: Text('ENC-${i+1}'), value: 'COE-${i+1}',),);
+            }
           }
-        }
-        else if(_branch == 'CIE') {
-          for(int i = 0; i < 4; i++) {
-            groupDropList.add(DropdownMenuItem(child: Text('CIE-${i+1}'), value: 'CIE-${i+1}',),);
+          else if(_branch == 'ECE') {
+            for(int i = 0; i < 6; i++) {
+              groupDropList.add(DropdownMenuItem(child: Text('ECE-${i+1}'), value: 'COE-${i+1}',),);
+            }
           }
-        }
-        else if(_branch == 'EIC') {
-          for(int i = 0; i < 2; i++) {
-            groupDropList.add(DropdownMenuItem(child: Text('EIC-${i+1}'), value: 'EIC-${i+1}',),);
+          else if(_branch == 'CIE') {
+            for(int i = 0; i < 4; i++) {
+              groupDropList.add(DropdownMenuItem(child: Text('CIE-${i+1}'), value: 'CIE-${i+1}',),);
+            }
           }
-        }
-        else if(_branch == 'CHE') {
-          for(int i = 0; i < 2; i++) {
-            groupDropList.add(DropdownMenuItem(child: Text('CHE-${i+1}'), value: 'CHE-${i+1}',),);
+          else if(_branch == 'EIC') {
+            for(int i = 0; i < 2; i++) {
+              groupDropList.add(DropdownMenuItem(child: Text('EIC-${i+1}'), value: 'EIC-${i+1}',),);
+            }
           }
-        }
-        else if(_branch == 'MEE') {
-          for(int i = 0; i < 12; i++) {
-            groupDropList.add(DropdownMenuItem(child: Text('MEE-${i+1}'), value: 'MEE-${i+1}',),);
+          else if(_branch == 'CHE') {
+            for(int i = 0; i < 2; i++) {
+              groupDropList.add(DropdownMenuItem(child: Text('CHE-${i+1}'), value: 'CHE-${i+1}',),);
+            }
           }
-        }
-        else if(_branch == 'MPE') {
-          for(int i = 0; i < 2; i++) {
-            groupDropList.add(DropdownMenuItem(child: Text('MPE-${i+1}'), value: 'MPE-${i+1}',),);
+          else if(_branch == 'MEE') {
+            for(int i = 0; i < 12; i++) {
+              groupDropList.add(DropdownMenuItem(child: Text('MEE-${i+1}'), value: 'MEE-${i+1}',),);
+            }
           }
-        }
-        else if(_branch == 'MTX') {
-          for(int i = 0; i < 2; i++) {
-            groupDropList.add(DropdownMenuItem(child: Text('MTX-${i+1}'), value: 'MTX-${i+1}',),);
+          else if(_branch == 'MPE') {
+            for(int i = 0; i < 2; i++) {
+              groupDropList.add(DropdownMenuItem(child: Text('MPE-${i+1}'), value: 'MPE-${i+1}',),);
+            }
           }
-        }
-        else if(_branch == 'BTD') {
-          for(int i = 0; i < 3; i++) {
-            groupDropList.add(DropdownMenuItem(child: Text('BTD-${i+1}'), value: 'BTD-${i+1}',),);
+          else if(_branch == 'MTX') {
+            for(int i = 0; i < 2; i++) {
+              groupDropList.add(DropdownMenuItem(child: Text('MTX-${i+1}'), value: 'MTX-${i+1}',),);
+            }
           }
-        }
-        else if(_branch == 'ELE') {
-          for(int i = 0; i < 6; i++) {
-            groupDropList.add(DropdownMenuItem(child: Text('ELE-${i+1}'), value: 'ELE-${i+1}',),);
+          else if(_branch == 'BTD') {
+            for(int i = 0; i < 3; i++) {
+              groupDropList.add(DropdownMenuItem(child: Text('BTD-${i+1}'), value: 'BTD-${i+1}',),);
+            }
+          }
+          else if(_branch == 'ELE') {
+            for(int i = 0; i < 6; i++) {
+              groupDropList.add(DropdownMenuItem(child: Text('ELE-${i+1}'), value: 'ELE-${i+1}',),);
+            }
+          }
+          else {
+            for(int i = 0; i < 5; i++) {
+              groupDropList.add(DropdownMenuItem(child: Text('${_branch} ${i + 1}'), value: (_branch + (i+1).toString())));
+            }
           }
         }
       }
     }
-
   }
 
   Mutation createCourse() {
     return Mutation(
       options: MutationOptions(document: """
-            mutation createCourse(\$name: String!, \$code: String!, \$year: Int!, \$branch: String!, \$group: String!, \$type: String!){
-              createCourse(courseInput: {name: \$name, code: \$code, year: \$year, branch: \$branch, group: \$group, type: \$type}) {
-                token
-                code
-              }
-            }
-        """),
+        mutation createCourse(\$name: String!, \$code: String!, \$year: Int!, \$branch: String!, \$group: String!, \$type: String!, \$special: String, \$subgroups: [String!]){
+          createCourse(courseInput: {name: \$name, code: \$code, year: \$year, branch: \$branch, group: \$group, type: \$type, special: \$special, subgroups: \$subgroups}) {
+            token
+            code
+          }
+        } 
+      """, fetchPolicy: FetchPolicy.noCache),
       builder: (
         RunMutation runMutation,
         QueryResult result,
@@ -199,15 +284,175 @@ class _CreateCourseState extends State<CreateCourse> {
   }
 
   void createNewCourse (runMutation) {
-    print(typeDropDownSelect);
-    runMutation({
-      "name": courseNameController.text,
-      "year": _year,
-      "branch": _branch,
-      "group": _group,
-      "code": courseCodeController.text,
-      "type": typeDropDownSelect
-    });
+    if(_specialCourse == null) {
+      print(typeDropDownSelect);
+      if(typeDropDownSelect == 'L') {
+        List <String> subGroups = [];
+        if(_year == 1) {
+          for(int i = 0; i < 5; i++) {
+            subGroups.add(_group + ' ' + (i+1).toString());
+          }
+        }
+        else {
+          if(_group == 'COE 1-4') {
+            subGroups.add('COE 1');
+            subGroups.add('COE 2');
+            subGroups.add('COE 3');
+            subGroups.add('COE 4');
+          }
+          else if(_group == 'COE 5-8') {
+            subGroups.add('COE 5');
+            subGroups.add('COE 6');
+            subGroups.add('COE 7');
+            subGroups.add('COE 8');
+          }
+          else if(_group == 'COE 9-12') {
+            subGroups.add('COE 9');
+            subGroups.add('COE 10');
+            subGroups.add('COE 11');
+            subGroups.add('COE 12');
+          }
+          else if(_group == 'COE 13-16') {
+            subGroups.add('COE 13');
+            subGroups.add('COE 14');
+            subGroups.add('COE 15');
+            subGroups.add('COE 16');
+          }
+          else if(_group == 'COE 17-20') {
+            subGroups.add('COE 17');
+            subGroups.add('COE 18');
+            subGroups.add('COE 19');
+            subGroups.add('COE 20');
+          }
+          else if(_group == 'COE 17-20') {
+            subGroups.add('COE 17');
+            subGroups.add('COE 18');
+            subGroups.add('COE 19');
+            subGroups.add('COE 20');
+          }
+          else if(_group == 'COE 21-24') {
+            subGroups.add('COE 21');
+            subGroups.add('COE 22');
+            subGroups.add('COE 23');
+            subGroups.add('COE 24');
+          }
+          else if(_group == 'COE 25-28') {
+            subGroups.add('COE 25');
+            subGroups.add('COE 26');
+            subGroups.add('COE 27');
+            subGroups.add('COE 28');
+          }
+          else if(_group == 'BTD 1-3') {
+            subGroups.add('BTD 1');
+            subGroups.add('BTD 2');
+            subGroups.add('BTD 3');
+          }
+          else if(_group == 'ENC 1-4') {
+            subGroups.add('ENC 1');
+            subGroups.add('ENC 2');
+            subGroups.add('ENC 3');
+            subGroups.add('ENC 4');
+          }
+          else if(_group == 'ENC 5-8') {
+            subGroups.add('ENC 5');
+            subGroups.add('ENC 6');
+            subGroups.add('ENC 7');
+            subGroups.add('ENC 8');
+          }
+          else if(_group == 'ECE 1-4') {
+            subGroups.add('ECE 1');
+            subGroups.add('ECE 2');
+            subGroups.add('ECE 3');
+            subGroups.add('ECE 4');
+          }
+          else if(_group == 'ECE 5-8') {
+            subGroups.add('ECE 5');
+            subGroups.add('ECE 6');
+            subGroups.add('ECE 7');
+            subGroups.add('ECE 8');
+          }
+          else if(_group == 'CHE 1-2') {
+            subGroups.add('CHE 1');
+            subGroups.add('CHE 2');
+          }
+          else if(_group == 'EIC 1-3') {
+            subGroups.add('EIC 1');
+            subGroups.add('EIC 2');
+            subGroups.add('EIC 3');
+          }
+          else if(_group == 'CIE 1-4') {
+            subGroups.add('CIE 1');
+            subGroups.add('CIE 2');
+            subGroups.add('CIE 3');
+            subGroups.add('CIE 4');
+          }
+          else if(_group == 'MEE 1-4') {
+            subGroups.add('MEE 1');
+            subGroups.add('MEE 2');
+            subGroups.add('MEE 3');
+            subGroups.add('MEE 4');
+          }
+          else if(_group == 'MEE 5-8') {
+            subGroups.add('MEE 5');
+            subGroups.add('MEE 6');
+            subGroups.add('MEE 7');
+            subGroups.add('MEE 8');
+          }
+          else if(_group == 'MEE 9-12') {
+            subGroups.add('MEE 9');
+            subGroups.add('MEE 10');
+            subGroups.add('MEE 11');
+            subGroups.add('MEE 12');
+          }
+          else if(_group == 'MTX 1-2') {
+            subGroups.add('MTX 1');
+            subGroups.add('MTX 2');
+          }
+          else if(_group == 'MPE 1-2') {
+            subGroups.add('MPE 1');
+            subGroups.add('MPE 2');
+          }
+          else if(_group == 'ELE 1-4') {
+            subGroups.add('ELE 1');
+            subGroups.add('ELE 2');
+            subGroups.add('ELE 3');
+            subGroups.add('ELE 4');
+          }
+        }
+        print('subGroups');
+        print(subGroups);
+        runMutation({
+          "name": courseNameController.text,
+          "year": _year,
+          "branch": _branch,
+          "group": _group,
+          "code": courseCodeController.text,
+          "type": typeDropDownSelect,
+          "subgroups": subGroups
+        });
+      }
+      else {
+        runMutation({
+          "name": courseNameController.text,
+          "year": _year,
+          "branch": _branch,
+          "group": _group,
+          "code": courseCodeController.text,
+          "type": typeDropDownSelect
+        });
+      }
+    }
+    else {
+      runMutation({
+        "name": courseNameController.text,
+        "year": 0,
+        "branch": 'Summer',
+        "group": 'Summer',
+        "code": courseCodeController.text,
+        "type": typeDropDownSelect,
+        'special': 'summer'
+      });
+    }
   }
 
   @override
@@ -221,117 +466,131 @@ class _CreateCourseState extends State<CreateCourse> {
                 color: Colors.white,
                 child: Container(
                   child: Center(
-                      child: Column(children: [
-                        Padding(padding: EdgeInsets.only(top: 140.0)),
-                        Text(
-                          'Course Details',
-                          style: TextStyle(color: Colors.blue, fontSize: 25.0),
-                        ),
-                        Padding(padding: EdgeInsets.only(top: 50.0)),
-                        TextFormField(
-                          controller: courseNameController,
-                          decoration: new InputDecoration(
-                            labelText: "Course name",
-                            fillColor: Colors.white,
-                            border: new OutlineInputBorder(
-                              borderRadius: new BorderRadius.circular(25.0),
-                              borderSide: new BorderSide(),
-                            ),
+                    child: Column(children: [
+                      Padding(padding: EdgeInsets.only(top: 40.0)),
+                      Text(
+                        'Course Details',
+                        style: TextStyle(color: Colors.blue, fontSize: 25.0),
+                      ),
+                      Padding(padding: EdgeInsets.only(top: 50.0)),
+                      TextFormField(
+                        controller: courseNameController,
+                        decoration: new InputDecoration(
+                          labelText: "Course name",
+                          fillColor: Colors.white,
+                          border: new OutlineInputBorder(
+                            borderRadius: new BorderRadius.circular(25.0),
+                            borderSide: new BorderSide(),
+                          ),
                         //fillColor: Colors.green
                         ),
-                      validator: (val) {
-                        if (val.length == 0) {
-                          return "Course cannot be empty";
-                        } else {
-                          return null;
-                        }
-                      },
-                      keyboardType: TextInputType.emailAddress,
-                      style: new TextStyle(
-                        fontFamily: "Poppins",
+                        validator: (val) {
+                          if (val.length == 0) {
+                            return "Course cannot be empty";
+                          } else {
+                            return null;
+                          }
+                        },
+                        keyboardType: TextInputType.emailAddress,
+                        style: new TextStyle(
+                          fontFamily: "Poppins",
+                        ),
                       ),
-                    ),
-                    Padding(padding: EdgeInsets.only(top: 20.0)),
-                    TextFormField(
-                      controller: courseCodeController,
-                      decoration: new InputDecoration(
-                        labelText: "Course Code",
-                        fillColor: Colors.white,
-                        border: new OutlineInputBorder(
-                          borderRadius: new BorderRadius.circular(25.0),
-                          borderSide: new BorderSide(),
+                      Padding(padding: EdgeInsets.only(top: 20.0)),
+                      TextFormField(
+                        controller: courseCodeController,
+                        decoration: new InputDecoration(
+                          labelText: "Course Code",
+                          fillColor: Colors.white,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(25.0),
+                            borderSide: BorderSide(),
+                          ),
+                          //fillColor: Colors.green
                         ),
-                        //fillColor: Colors.green
+                        validator: (val) {
+                          if (val.length == 0) {
+                            return "Course No cannot be empty";
+                          } else {
+                            return null;
+                          }
+                        },
+                        keyboardType: TextInputType.emailAddress,
+                        style: new TextStyle(
+                          fontFamily: "Poppins",
+                        ),
                       ),
-                      validator: (val) {
-                        if (val.length == 0) {
-                          return "Course No cannot be empty";
-                        } else {
-                          return null;
-                        }
-                      },
-                      keyboardType: TextInputType.emailAddress,
-                      style: new TextStyle(
-                        fontFamily: "Poppins",
+                      new Padding(padding: EdgeInsets.only(top: 20.0)),
+                      Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          Text('Special Course: '),
+                          DropdownButton(
+                              value: _specialCourse,
+                              items: specialCourseDropList,
+                              hint: Text('Select'),
+                              onChanged: (value) => {selectSpecialCourseDropDown(value)}
+                          )
+                        ],
                       ),
-                    ),
-                    new Padding(padding: EdgeInsets.only(top: 20.0)),
-                        Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            Text('Year: '),
-                            DropdownButton(
-                                value: _year,
-                                items: yearDropList,
-                                hint: Text('Select'),
-                                onChanged: (value) => {selectYearDropDown(value)}
-                            )
-                          ],
-                        ),
-                        Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            Text('Branch: '),
-                            DropdownButton(
-                                value: _branch,
-                                items: branchDropList,
-                                hint: Text('Select'),
-                                onChanged: (value) => {selectBranchDropDown(value)}
-                            )
-                          ],
-                        ),
-                        Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            Text('Group: '),
-                            DropdownButton(
-                                value: _group,
-                                items: groupDropList,
-                                hint: Text('Select'),
-                                onChanged: (value) => {selectGroupDropDown(value)}
-                            )
-                          ],
-                        ),
-                        Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            Text('Type: '),
-                            DropdownButton(
-                                value: typeDropDownSelect,
-                                items: typeDropList,
-                                hint: Text('Select'),
-                                onChanged: (value) => {selectTypeDropDown(value)}
-                            )
-                          ],
-                        ),
+                      Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          Text('Type: '),
+                          DropdownButton(
+                              value: typeDropDownSelect,
+                              items: typeDropList,
+                              hint: Text('Select'),
+                              onChanged: (value) => {selectTypeDropDown(value)}
+                          )
+                        ],
+                      ),
+                      Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          Text('Year: '),
+                          DropdownButton(
+                              value: _year,
+                              items: yearDropList,
+                              hint: Text('Select'),
+                              onChanged: (value) => {selectYearDropDown(value)}
+                          )
+                        ],
+                      ),
+                      Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          Text('Branch: '),
+                          DropdownButton(
+                              value: _branch,
+                              items: branchDropList,
+                              hint: Text('Select'),
+                              onChanged: (value) => {selectBranchDropDown(value)}
+                          )
+                        ],
+                      ),
+                      Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          Text('Group: '),
+                          DropdownButton(
+                              value: _group,
+                              items: groupDropList,
+                              hint: Text('Select'),
+                              onChanged: (value) => {selectGroupDropDown(value)}
+                          )
+                        ],
+                      ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
@@ -382,6 +641,19 @@ class _CreateCourseState extends State<CreateCourse> {
     setState(() {
       typeDropDownSelect = value;
     });
+  }
+
+  void selectSpecialCourseDropDown (value) {
+    if(value != 'null') {
+      setState(() {
+        _specialCourse = value;
+      });
+    }
+    else {
+      setState(() {
+        _specialCourse = null;
+      });
+    }
   }
 
   @override

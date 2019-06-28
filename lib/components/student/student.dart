@@ -9,8 +9,6 @@ class Student extends StatefulWidget {
 
 class _StudentState extends State<Student> {
 
-  int stateUpdator = 0;
-
   List <String> courseNames = ["this"];
   List <String> courseCodes;
 
@@ -51,7 +49,7 @@ class _StudentState extends State<Student> {
           }
         }
       }
-  """,  pollInterval: 100, fetchPolicy: FetchPolicy.noCache);
+  """,  pollInterval: 1, fetchPolicy: FetchPolicy.noCache);
 
 
 
@@ -62,7 +60,7 @@ class _StudentState extends State<Student> {
           incDelta
         }
       }
-  """, pollInterval: 100, fetchPolicy: FetchPolicy.noCache);
+  """, pollInterval: 1, fetchPolicy: FetchPolicy.noCache);
 
 //  Try to dissolve into the Widgets
   getStudentDetails () {
@@ -170,8 +168,8 @@ class _StudentState extends State<Student> {
     }
     return Container(
       child: Query(options: QueryOptions(document: """
-          query availableCourses (\$year: Int!, \$branch: String!, \$group: String!) {
-            availableCourses (availableCoursesInput: {year: \$year, branch: \$branch, group: \$group}) {
+          query studentCourses {
+            studentCourses {
               name
               code
               sessions {
@@ -183,10 +181,9 @@ class _StudentState extends State<Student> {
             }
           }
         """, variables: <String, dynamic> {
-        "year": year,
-        "branch": branch,
-        "group": group
       }, pollInterval: 100),builder: (QueryResult result, { VoidCallback refetch }) {
+
+        print(result.data);
 
         if (result.errors != null) {
           return Text(result.errors.toString());
@@ -197,7 +194,7 @@ class _StudentState extends State<Student> {
         }
 
         // it can be either Map or List
-        List courses = result.data['availableCourses'];
+        List courses = result.data['studentCourses'];
 
         if(courses.length == 0) {
           return Text("No Courses Found");
@@ -236,8 +233,7 @@ class _StudentState extends State<Student> {
                                       style: TextStyle(
                                           color: Colors.black,
                                           fontWeight: FontWeight
-                                              .w700,
-                                          fontSize: 34.0)),
+                                              .w700,)),
                                   Attendance(courses[index]["sessions"]),
                                 ],
                               ),
@@ -276,42 +272,68 @@ class _StudentState extends State<Student> {
           width: MediaQuery.of(context).size.width,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
-
-                children: <Widget>[
-                  Padding(padding: EdgeInsets.only(top: 20.0)),
-                  Expanded (
-                    flex: 1,
-                    child: AvailableCourses()
-                  ),
-                  Padding(padding: EdgeInsets.only(top: 15.0)),
-                  Container(
-                    height: MediaQuery.of(context).size.height * 0.16,
-                    child: Container (
-                      margin: EdgeInsets.symmetric(vertical: 25.0, horizontal: 54.0),
-                      child: Material (
-                        elevation: 8.0,
-                        color: Colors.black,
-                        borderRadius: BorderRadius.circular(32.0),
-                        child: InkWell (
-                          onTap: () {alive = false; Navigator.pushReplacementNamed(context, '/joinSession');},
-                          child: Padding (
-                            padding: EdgeInsets.all(12.0),
-                            child: Row (
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: <Widget> [
-                                Icon(Icons.add, color: Colors.white),
-                                Padding(padding: EdgeInsets.only(right: 16.0)),
-                                Text('Mark Attendance', style: TextStyle(color: Colors.white))
-                              ],
-                            ),
+              children: <Widget>[
+                Padding(padding: EdgeInsets.only(top: 20.0)),
+                Expanded (
+                  flex: 1,
+                  child: AvailableCourses()
+                ),
+                Padding(padding: EdgeInsets.only(top: 15.0)),
+                Container(
+                  height: MediaQuery.of(context).size.height * 0.12 ,
+                  child: Container (
+                    margin: EdgeInsets.only(top: 25.0, left: 54.0, right: 54.0),
+                    child: Material (
+                      elevation: 8.0,
+                      color: Colors.black,
+                      borderRadius: BorderRadius.circular(32.0),
+                      child: InkWell (
+                        onTap: () {alive = false; Navigator.pushReplacementNamed(context, '/joinSession');},
+                        child: Padding (
+                          padding: EdgeInsets.all(12.0),
+                          child: Row (
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget> [
+                              Icon(Icons.add, color: Colors.white),
+                              Padding(padding: EdgeInsets.only(right: 16.0)),
+                              Text('Mark Attendance', style: TextStyle(color: Colors.white))
+                            ],
                           ),
                         ),
-                      )
-                    ),
+                      ),
+                    )
                   ),
-                ]
+                ),
+                Container(
+                  height: MediaQuery.of(context).size.height * 0.16,
+                  child: Container (
+                    margin: EdgeInsets.symmetric(vertical: 25.0, horizontal: 54.0),
+                    child: Material (
+                      elevation: 8.0,
+                      color: Colors.black,
+                      borderRadius: BorderRadius.circular(32.0),
+                      child: InkWell (
+                        onTap: () {alive = false; Navigator.pushReplacementNamed(context, '/joinCourse');},
+                        child: Padding (
+                          padding: EdgeInsets.all(12.0),
+                          child: Row (
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget> [
+                              Icon(Icons.add, color: Colors.white),
+                              Padding(padding: EdgeInsets.only(right: 16.0)),
+                              Text('Join Course', style: TextStyle(color: Colors.white))
+                            ],
+                          ),
+                        ),
+                      ),
+                    )
+                  ),
+                ),
+              ]
             )
         )
     );

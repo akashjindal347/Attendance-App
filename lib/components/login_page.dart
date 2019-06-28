@@ -7,6 +7,7 @@ import 'package:scoped_model/scoped_model.dart';
 import '../models/AppModel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 
 class LoginPage extends StatefulWidget {
@@ -24,6 +25,8 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
   final GlobalKey<FormState> _studentDetailskey = new GlobalKey<FormState>();
   bool matchingPassword = false;
   bool invalidDialogAllowed = true;
+
+  bool isLoading = false;
 
   final FocusNode myFocusNodeEmailLogin = FocusNode();
   final FocusNode myFocusNodePasswordLogin = FocusNode();
@@ -212,6 +215,18 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
     }
   }
 
+  Widget Loader () {
+    if(isLoading) {
+      return Container(
+        color: Color(0x22000000),
+        child: SpinKitRing(
+          color: Colors.white,
+        ),
+      );
+    }
+    else return Container();
+  }
+
   Widget TypeSelector() {
     return Container(
       decoration: BoxDecoration(
@@ -219,7 +234,7 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
         image: DecorationImage(
           colorFilter: ColorFilter.mode(
               Colors.black.withOpacity(0.1), BlendMode.dstATop),
-          image: AssetImage('assets/images/logo.png'),
+          image: AssetImage('assets/img/logo.png'),
           fit: BoxFit.cover,
         ),
       ),
@@ -233,7 +248,7 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                   image: DecorationImage(
                     colorFilter: ColorFilter.mode(
                         Colors.black.withOpacity(1.0), BlendMode.dstATop),
-                    image: AssetImage('assets/images/logo.png'),
+                    image: AssetImage('assets/img/logo.png'),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -263,11 +278,12 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                         children: <Widget>[
                           Expanded(
                             child: Text(
-                              "A Teacher",
+                              "Teacher",
                               textAlign: TextAlign.center,
                               style: TextStyle(
-                                  color: Colors.blueAccent,
-                                  fontWeight: FontWeight.bold),
+                                color: Colors.blueAccent,
+                                fontWeight: FontWeight.bold)
+                              ,
                             ),
                           ),
                         ],
@@ -300,11 +316,12 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                         children: <Widget>[
                           Expanded(
                             child: Text(
-                              "A Student",
+                              "Student",
                               textAlign: TextAlign.center,
                               style: TextStyle(
-                                  color: Colors.blueAccent,
-                                  fontWeight: FontWeight.bold),
+                                color: Colors.blueAccent,
+                                fontWeight: FontWeight.bold
+                              ),
                             ),
                           ),
                         ],
@@ -551,81 +568,79 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
         onNotification: (overscroll) {
           overscroll.disallowGlow();
         },
-        child: SingleChildScrollView(
-          controller: singleChildScrollViewController,
-          child: Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height >= 775.0
-                ? MediaQuery.of(context).size.height
-                : 775.0,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  Colors.blueAccent,
-                  Colors.blueAccent
-                ],
-              begin: const FractionalOffset(0.0, 0.0),
-              end: const FractionalOffset(1.0, 1.0),
-              stops: [0.0, 1.0],
-              tileMode: TileMode.clamp),
-            ),
-            child: PageView(
-              controller: flowController,
-              children: <Widget>[
-                TypeSelector(),
-                Column(
-                  mainAxisSize: MainAxisSize.max,
+        child: Stack(
+          children: <Widget>[
+            SingleChildScrollView(
+              controller: singleChildScrollViewController,
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height >= 775.0
+                    ? MediaQuery.of(context).size.height
+                    : 775.0,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                      colors: [
+                        Colors.blueAccent,
+                        Colors.blueAccent
+                      ],
+                      begin: const FractionalOffset(0.0, 0.0),
+                      end: const FractionalOffset(1.0, 1.0),
+                      stops: [0.0, 1.0],
+                      tileMode: TileMode.clamp),
+                ),
+                child: PageView(
+                  controller: flowController,
                   children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.only(top: 75.0),
-                      child: Image(
-                          width: 250.0,
-                          height: 41.0,
-                          fit: BoxFit.fill,
-                          image: new AssetImage(
-                            'assets/img/doubtout.png',
-                          )),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(top: 20.0),
-                      child: _buildMenuBar(context),
-                    ),
-                    Expanded(
-                      flex: 2,
-                      child: PageView(
-                        controller: _pageController,
-                        onPageChanged: (i) {
-                          if (i == 0) {
-                            setState(() {
-                              right = Colors.white;
-                              left = Colors.black;
-                            });
-                          } else if (i == 1) {
-                            setState(() {
-                              right = Colors.black;
-                              left = Colors.white;
-                            });
-                          }
-                        },
-                        children: <Widget>[
-                          ConstrainedBox(
-                            constraints: const BoxConstraints.expand(),
-                            child: _buildSignIn(context),
+                    TypeSelector(),
+                    Column(
+                      mainAxisSize: MainAxisSize.max,
+                      children: <Widget>[
+                        Padding(
+                          padding: EdgeInsets.only(top: 75.0),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(top: 20.0),
+                          child: _buildMenuBar(context),
+                        ),
+                        Expanded(
+                          flex: 2,
+                          child: PageView(
+                            controller: _pageController,
+                            onPageChanged: (i) {
+                              if (i == 0) {
+                                setState(() {
+                                  right = Colors.white;
+                                  left = Colors.black;
+                                });
+                              } else if (i == 1) {
+                                setState(() {
+                                  right = Colors.black;
+                                  left = Colors.white;
+                                });
+                              }
+                            },
+                            children: <Widget>[
+                              ConstrainedBox(
+                                constraints: const BoxConstraints.expand(),
+                                child: _buildSignIn(context),
+                              ),
+                              ConstrainedBox(
+                                constraints: const BoxConstraints.expand(),
+                                child: _buildSignUp(context),
+                              ),
+                            ],
                           ),
-                          ConstrainedBox(
-                            constraints: const BoxConstraints.expand(),
-                            child: _buildSignUp(context),
-                          ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
+                    StudentDetails()
                   ],
                 ),
-                StudentDetails()
-              ],
+              ),
             ),
-          ),
-        ),
+            Loader()
+          ],
+        )
       ),
     );
   }
@@ -727,13 +742,6 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
           height: MediaQuery.of(context).size.height,
           decoration: BoxDecoration(
             color: Colors.blueAccent,
-            image: DecorationImage(
-              colorFilter: new ColorFilter.mode(
-                Colors.black.withOpacity(0.1), BlendMode.dstATop
-              ),
-              image: AssetImage('assets/img/logo.png'),
-              fit: BoxFit.cover,
-            ),
           ),
           padding: EdgeInsets.only(top: 20.0),
           child: Column(
@@ -757,14 +765,14 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                           children: <Widget>[
                             Padding(
                               padding: EdgeInsets.only(
-                                  top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
+                                top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
                               child: TextFormField(
                                 controller: loginEmailController,
                                 keyboardType: TextInputType.emailAddress,
                                 style: TextStyle(
-                                    fontFamily: "WorkSansSemiBold",
-                                    fontSize: 16.0,
-                                    color: Colors.black),
+                                  fontFamily: "WorkSansSemiBold",
+                                  fontSize: 16.0,
+                                  color: Colors.black),
                                 decoration: InputDecoration(
                                   border: InputBorder.none,
                                   icon: Icon(
@@ -774,8 +782,9 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                                   ),
                                   hintText: "Email Address",
                                   hintStyle: TextStyle(
-                                      fontFamily: "WorkSansSemiBold",
-                                      fontSize: 17.0),
+                                    fontFamily: "WorkSansSemiBold",
+                                    fontSize: 17.0
+                                  ),
                                 ),
                               ),
                             ),
@@ -1098,6 +1107,9 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
           onCompleted: (dynamic resultData) {
             print("At Least Mutated");
             if(resultData == null) {
+              setState(() {
+                isLoading = false;
+              });
               print(resultData);
               showInSnackBar('User already Exists');
             }
@@ -1146,6 +1158,9 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
           onCompleted: (dynamic resultData) {
             print("At Least Mutated");
             if(resultData == null) {
+              setState(() {
+                isLoading = false;
+              });
               print(resultData);
               showInSnackBar('User already Exists');
             }
@@ -1204,6 +1219,9 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
               Navigator.pushReplacementNamed(context, '/teacher');
             }
             else {
+              setState(() {
+                isLoading = false;
+              });
               showInSnackBar("Invalid Credentials");
             }
           },
@@ -1251,6 +1269,9 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
               Navigator.pushReplacementNamed(context, '/student');
             }
             else {
+              setState(() {
+                isLoading = false;
+              });
               showInSnackBar("Invalid Credentials");
             }
           },
@@ -1260,23 +1281,29 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
   }
 
   void logIn (runMutation, String method, String password) {
-      if(runMutation == null) {
-        print(method);
-        runMutation({
-          "method": method,
-          "password": password,
-        });
-      }
-      else {
-        print(loginEmailController.text);
-        runMutation({
-          "method": loginEmailController.text,
-          "password": loginPasswordController.text,
-        });
-      }
+    setState(() {
+      isLoading = true;
+    });
+    if(runMutation == null) {
+      print(method);
+      runMutation({
+        "method": method,
+        "password": password,
+      });
+    }
+    else {
+      print(loginEmailController.text);
+      runMutation({
+        "method": loginEmailController.text,
+        "password": loginPasswordController.text,
+      });
+    }
   }
 
   void signUp (runMutation) {
+    setState(() {
+      isLoading = true;
+    });
     print(signupNameController.text);
     if(signupPasswordController.text == signupConfirmPasswordController.text) {
       if(_mode == 'Teacher') {

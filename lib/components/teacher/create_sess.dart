@@ -4,7 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:scoped_model/scoped_model.dart';
 import '../../models/AppModel.dart';
 import 'package:intl/intl.dart';
-import './timer.dart';
+import 'package:attendance_app/utils/timer.dart';
 
 class CreateSession extends StatefulWidget {
   CreateSession({Key key}) : super(key: key);
@@ -105,7 +105,7 @@ class _CreateSessionState extends State<CreateSession> {
       "name": model.courseName,
       "incDelta": incDropDownSelect
     });
-    Future.delayed(Duration(milliseconds: (60 * 1000 * validityDropDownSelect)), () {
+    Future.delayed(Duration(milliseconds: (1000 * validityDropDownSelect)), () {
       completeSession(model);
     });
   }
@@ -151,7 +151,7 @@ class _CreateSessionState extends State<CreateSession> {
   var now = new DateTime.now();
 
   List <DropdownMenuItem<int>> incDropList = [];
-  List <DropdownMenuItem<int>> validityDropList = [DropdownMenuItem(child: Text('1min'), value: 1,), DropdownMenuItem(child: Text('2min'), value: 2,), DropdownMenuItem(child: Text('5min'), value: 5,), DropdownMenuItem(child: Text('10min'), value: 10,)];
+  List <DropdownMenuItem<int>> validityDropList = [DropdownMenuItem(child: Text('5sec'), value: 5,), DropdownMenuItem(child: Text('10sec'), value: 10,), DropdownMenuItem(child: Text('15sec'), value: 15,), DropdownMenuItem(child: Text('20min'), value: 20,)];
 
   void loadDropDown () {
     incDropList = [];

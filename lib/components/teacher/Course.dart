@@ -37,8 +37,8 @@ class Course extends StatelessWidget {
             Expanded(
               flex: 1,
               child: Query(options: QueryOptions(document: """
-                query courseSessions ( \$courseCode: String! ){
-                  courseSessions ( courseCode: \$courseCode ) {
+                query courseSessions ( \$courseId: String! ){
+                  courseSessions ( courseId: \$courseId ) {
                     _id
                     name
                     attendance
@@ -47,7 +47,7 @@ class Course extends StatelessWidget {
                   }
                 }
                 """, variables: <String, dynamic> {
-                  "courseCode": model.courseCode
+                  "courseId": model.courseId
                 }, pollInterval: 100, fetchPolicy: FetchPolicy.noCache), builder: (QueryResult result, {VoidCallback refetch}) {
                 if(result.errors != null) {
                   return Center(

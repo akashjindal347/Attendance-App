@@ -79,16 +79,6 @@ class _LoginPageState extends State<LoginPage>
               mainAxisSize: MainAxisSize.max,
               children: <Widget>[
                 Padding(
-                  padding: EdgeInsets.only(top: 75.0),
-                  child: new Image(
-                      width: 250.0,
-                      height: 191.0,
-                      fit: BoxFit.fill,
-                      image: new AssetImage(
-                        'assets/img/doubtout.png',
-                      )),
-                ),
-                Padding(
                   padding: EdgeInsets.only(top: 20.0),
                   child: _buildMenuBar(context),
                 ),
