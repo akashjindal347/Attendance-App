@@ -28,13 +28,8 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
 
   bool isLoading = false;
 
-  final FocusNode myFocusNodeEmailLogin = FocusNode();
-  final FocusNode myFocusNodePasswordLogin = FocusNode();
-  final FocusNode myFocusNodePassword = FocusNode();
-  final FocusNode myFocusNodeEmail = FocusNode();
-  final FocusNode myFocusNodeName = FocusNode();
-
   String _mode = "Teacher";
+  String _college;
 
   bool loggedIn = false;
 
@@ -56,6 +51,15 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
   PageController _pageController;
   PageController flowController;
 
+  final FocusNode studentSignUpRollNumberFocusNode = FocusNode();
+  final FocusNode studentSignUpPhoneNumberFocusNode = FocusNode();
+  final FocusNode signInUsernameFocusNode = FocusNode();
+  final FocusNode signInPasswordFocusNode = FocusNode();
+  final FocusNode signUpNameFocusNode = FocusNode();
+  final FocusNode signUpEmailFocusNode = FocusNode();
+  final FocusNode signUpPasswordFocusNode = FocusNode();
+  final FocusNode signUpPasswordConfirmFocusNode = FocusNode();
+
   Color left = Colors.black;
   Color right = Colors.white;
 
@@ -66,6 +70,7 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
   List <DropdownMenuItem<int>> yearDropList = [];
   List <DropdownMenuItem<String>> branchDropList = [];
   List <DropdownMenuItem<String>> groupDropList = [];
+  List <DropdownMenuItem<String>> collegeDropList = [DropdownMenuItem(child: Text('Thapar'), value: 'Thapar',)];
 
   @override
   void initState() {
@@ -360,7 +365,8 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                       children: <Widget>[
                         Padding(
                           padding: EdgeInsets.only(
-                              top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
+                            top: 20.0, bottom: 20.0, left: 25.0, right: 25.0
+                          ),
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -368,10 +374,10 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                             children: <Widget>[
                               Text('Year: '),
                               DropdownButton(
-                                  value: _year,
-                                  items: yearDropList,
-                                  hint: Text('Select'),
-                                  onChanged: (value) => {selectYearDropDown(value)}
+                                value: _year,
+                                items: yearDropList,
+                                hint: Text('Select'),
+                                onChanged: (value) => {selectYearDropDown(value)},
                               )
                             ],
                           ),
@@ -431,8 +437,8 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                           padding: EdgeInsets.only(
                               top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
                           child: TextFormField(
-                            focusNode: myFocusNodeName,
-                            keyboardType: TextInputType.text,
+                            focusNode: studentSignUpRollNumberFocusNode,
+                            keyboardType: TextInputType.number,
                             textCapitalization: TextCapitalization.words,
                             controller: signupRollController,
                             style: TextStyle(
@@ -461,14 +467,15 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                           padding: EdgeInsets.only(
                               top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
                           child: TextFormField(
-                            focusNode: myFocusNodeName,
-                            keyboardType: TextInputType.text,
+                            focusNode: studentSignUpPhoneNumberFocusNode,
+                            keyboardType: TextInputType.number,
                             textCapitalization: TextCapitalization.words,
                             controller: signupPhoneController,
                             style: TextStyle(
-                                fontFamily: "WorkSansSemiBold",
-                                fontSize: 16.0,
-                                color: Colors.black),
+                              fontFamily: "WorkSansSemiBold",
+                              fontSize: 16.0,
+                              color: Colors.black
+                            ),
                             decoration: InputDecoration(
                               border: InputBorder.none,
                               icon: Icon(
@@ -477,8 +484,8 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                               ),
                               hintText: "Phone Number",
                               hintStyle: TextStyle(
-                                  fontFamily: "WorkSansSemiBold",
-                                  fontSize: 16.0),
+                                fontFamily: "WorkSansSemiBold",
+                                fontSize: 16.0),
                             ),
                           ),
                         ),
@@ -504,14 +511,14 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                     ),
                   ],
                   gradient: new LinearGradient(
-                      colors: [
-                        Colors.blue,
-                        Colors.blue
-                      ],
-                      begin: const FractionalOffset(0.2, 0.2),
-                      end: const FractionalOffset(1.0, 1.0),
-                      stops: [0.0, 1.0],
-                      tileMode: TileMode.clamp),
+                    colors: [
+                      Colors.blue,
+                      Colors.blue
+                    ],
+                    begin: const FractionalOffset(0.2, 0.2),
+                    end: const FractionalOffset(1.0, 1.0),
+                    stops: [0.0, 1.0],
+                    tileMode: TileMode.clamp),
                 ),
                 child: _initSignup(context)
               ),
@@ -533,18 +540,18 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
           //shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(5.0))),
           child: Padding(
             padding: const EdgeInsets.symmetric(
-                vertical: 10.0, horizontal: 42.0
+              vertical: 10.0, horizontal: 42.0
             ),
             child: Text(
               'Next',
               style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 25.0,
-                  fontFamily: "WorkSansBold"),
+                color: Colors.white,
+                fontSize: 25.0,
+                fontFamily: "WorkSansBold"),
             ),
           ),
           onPressed: () {
-            if(signupPasswordController.text == null || signupPasswordController.text == '' || signupConfirmPasswordController.text == null || signupConfirmPasswordController.text == '' || signupNameController.text == null || signupNameController.text == '' || signupEmailController.text == null || signupEmailController.text == '') {
+            if(signupPasswordController.text == null || signupPasswordController.text == '' || signupConfirmPasswordController.text == null || signupConfirmPasswordController.text == '' || signupNameController.text == null || signupNameController.text == '' || signupEmailController.text == null || signupEmailController.text == '' || _college == null) {
               showInSnackBar('Enter All Details');
               return;
             }
@@ -563,6 +570,7 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
   Widget build(BuildContext context) {
     buildDrops();
     return Scaffold(
+      resizeToAvoidBottomPadding: false,
       key: _scaffoldKey,
       body: NotificationListener<OverscrollIndicatorNotification>(
         onNotification: (overscroll) {
@@ -579,14 +587,14 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                     : 775.0,
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
-                      colors: [
-                        Colors.blueAccent,
-                        Colors.blueAccent
-                      ],
-                      begin: const FractionalOffset(0.0, 0.0),
-                      end: const FractionalOffset(1.0, 1.0),
-                      stops: [0.0, 1.0],
-                      tileMode: TileMode.clamp),
+                    colors: [
+                      Colors.blueAccent,
+                      Colors.blueAccent
+                    ],
+                    begin: const FractionalOffset(0.0, 0.0),
+                    end: const FractionalOffset(1.0, 1.0),
+                    stops: [0.0, 1.0],
+                    tileMode: TileMode.clamp),
                 ),
                 child: PageView(
                   controller: flowController,
@@ -648,9 +656,6 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
 
   @override
   void dispose() {
-    myFocusNodePassword.dispose();
-    myFocusNodeEmail.dispose();
-    myFocusNodeName.dispose();
     _pageController?.dispose();
     flowController?.dispose();
     loginEmailController.dispose();
@@ -663,7 +668,6 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
   }
 
   void showInSnackBar(String value) {
-    FocusScope.of(context).requestFocus(new FocusNode());
     _scaffoldKey.currentState?.removeCurrentSnackBar();
     _scaffoldKey.currentState.showSnackBar(new SnackBar(
       content: Text(
@@ -683,6 +687,14 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
     SharedPreferences preferences = await SharedPreferences.getInstance();
     preferences.setString('token', token);
     preferences.setString('userId', id);
+    preferences.setString('userType', 'Teacher');
+  }
+
+  Future setStudent(String token, String id) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    preferences.setString('token', token);
+    preferences.setString('userId', id);
+    preferences.setString('userType', 'Student');
   }
 
   Widget _buildMenuBar(BuildContext context) {
@@ -708,9 +720,10 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                     child: Text(
                       "Existing",
                       style: TextStyle(
-                          color: left,
-                          fontSize: 16.0,
-                          fontFamily: "WorkSansSemiBold"),
+                        color: left,
+                        fontSize: 16.0,
+                        fontFamily: "WorkSansSemiBold"
+                      ),
                     ),
                   ),
                 ),
@@ -722,9 +735,10 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                     child: Text(
                       "New",
                       style: TextStyle(
-                          color: right,
-                          fontSize: 16.0,
-                          fontFamily: "WorkSansSemiBold"),
+                        color: right,
+                        fontSize: 16.0,
+                        fontFamily: "WorkSansSemiBold"
+                      ),
                     ),
                   ),
                 ),
@@ -758,7 +772,6 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                     ),
                     child: Container(
                       width: 300.0,
-                      height: 190.0,
                       child: Form(
                         key: _loginkey,
                         child: Column(
@@ -767,6 +780,7 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                               padding: EdgeInsets.only(
                                 top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
                               child: TextFormField(
+                                focusNode: signInUsernameFocusNode,
                                 controller: loginEmailController,
                                 keyboardType: TextInputType.emailAddress,
                                 style: TextStyle(
@@ -797,13 +811,14 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                               padding: EdgeInsets.only(
                                   top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
                               child: TextFormField(
-                                focusNode: myFocusNodePasswordLogin,
+                                focusNode: signInPasswordFocusNode,
                                 controller: loginPasswordController,
                                 obscureText: _obscureTextLogin,
                                 style: TextStyle(
-                                    fontFamily: "WorkSansSemiBold",
-                                    fontSize: 16.0,
-                                    color: Colors.black),
+                                  fontFamily: "WorkSansSemiBold",
+                                  fontSize: 16.0,
+                                  color: Colors.black
+                                ),
                                 decoration: InputDecoration(
                                   border: InputBorder.none,
                                   icon: Icon(
@@ -813,8 +828,8 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                                   ),
                                   hintText: "Password",
                                   hintStyle: TextStyle(
-                                      fontFamily: "WorkSansSemiBold",
-                                      fontSize: 17.0),
+                                    fontFamily: "WorkSansSemiBold",
+                                    fontSize: 17.0),
                                   suffixIcon: GestureDetector(
                                     onTap: _toggleLogin,
                                     child: Icon(
@@ -832,8 +847,8 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.only(top: 170.0),
-                    decoration: new BoxDecoration(
+                    margin: EdgeInsets.only(top: 160.0),
+                    decoration: BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(5.0)),
                       boxShadow: <BoxShadow>[
                         BoxShadow(
@@ -847,15 +862,15 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                           blurRadius: 20.0,
                         ),
                       ],
-                      gradient: new LinearGradient(
-                          colors: [
-                            Colors.blue,
-                            Colors.blue
-                          ],
-                          begin: const FractionalOffset(0.2, 0.2),
-                          end: const FractionalOffset(1.0, 1.0),
-                          stops: [0.0, 1.0],
-                          tileMode: TileMode.clamp),
+                      gradient: LinearGradient(
+                        colors: [
+                          Colors.blue,
+                          Colors.blue
+                        ],
+                        begin: const FractionalOffset(0.2, 0.2),
+                        end: const FractionalOffset(1.0, 1.0),
+                        stops: [0.0, 1.0],
+                        tileMode: TileMode.clamp),
                     ),
                     child: _initLogIn(context),
                   )
@@ -864,15 +879,18 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
               Padding(
                 padding: EdgeInsets.only(top: 10.0),
                 child: FlatButton(
-                    onPressed: () {},
-                    child: Text(
-                      "Forgot Password?",
-                      style: TextStyle(
-                          decoration: TextDecoration.underline,
-                          color: Colors.white,
-                          fontSize: 16.0,
-                          fontFamily: "WorkSansMedium"),
-                    )),
+                  onPressed: () {
+                    flowController.animateToPage(0, duration: Duration(milliseconds: 750), curve: Curves.decelerate);
+                  },
+                  child: Text(
+                    "Go Back",
+                    style: TextStyle(
+                      decoration: TextDecoration.underline,
+                      color: Colors.white,
+                      fontSize: 16.0,
+                      fontFamily: "WorkSansMedium"),
+                  )
+                ),
               ),
             ],
           ),
@@ -897,7 +915,6 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                 ),
                 child: Container(
                   width: 300.0,
-                  height: 360.0,
                   child: Form(
                     key: _signupkey,
                     child: Column(
@@ -906,7 +923,7 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                           padding: EdgeInsets.only(
                               top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
                           child: TextFormField(
-                            focusNode: myFocusNodeName,
+                            focusNode: signUpNameFocusNode,
                             keyboardType: TextInputType.text,
                             textCapitalization: TextCapitalization.words,
                             controller: signupNameController,
@@ -936,7 +953,7 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                           padding: EdgeInsets.only(
                               top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
                           child: TextFormField(
-                            focusNode: myFocusNodeEmail,
+                            focusNode: signUpEmailFocusNode,
                             controller: signupEmailController,
                             keyboardType: TextInputType.emailAddress,
                             style: TextStyle(
@@ -965,7 +982,7 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                           padding: EdgeInsets.only(
                               top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
                           child: TextFormField(
-                            focusNode: myFocusNodePassword,
+                            focusNode: signUpPasswordFocusNode,
                             controller: signupPasswordController,
                             obscureText: _obscureTextSignup,
                             style: TextStyle(
@@ -1002,6 +1019,7 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                           padding: EdgeInsets.only(
                               top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
                           child: TextFormField(
+                            focusNode: signUpPasswordConfirmFocusNode,
                             controller: signupConfirmPasswordController,
                             obscureText: _obscureTextSignupConfirm,
                             style: TextStyle(
@@ -1029,13 +1047,32 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                             ),
                           ),
                         ),
+                        Padding(
+                          padding: EdgeInsets.only(
+                              top: 0.0, bottom: 20.0, left: 25.0, right: 25.0
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              Text('College: '),
+                              DropdownButton(
+                                value: _college,
+                                items: collegeDropList,
+                                hint: Text('Select'),
+                                onChanged: (value) => {selectCollegeDropDown(value)}
+                              )
+                            ],
+                          ),
+                        ),
                       ],
                     ),
                   ),
                 ),
               ),
               Container(
-                margin: EdgeInsets.only(top: 340.0),
+                margin: EdgeInsets.only(top: 400.0),
                 decoration: new BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(5.0)),
                   boxShadow: <BoxShadow>[
@@ -1116,6 +1153,7 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
             else {
               model.setToken(resultData["createTeacher"]["token"]);
               model.setId(resultData["createTeacher"]["userId"]);
+              setTeacher(resultData["createTeacher"]["token"], resultData["createTeacher"]["userId"]);
               Navigator.pushReplacementNamed(context, '/teacher');
             }
           },
@@ -1167,6 +1205,7 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
             else {
               model.setToken(resultData["createStudent"]["token"]);
               model.setId(resultData["createStudent"]["userId"]);
+              setStudent(resultData["createStudent"]["token"], resultData["createStudent"]["userId"]);
               Navigator.pushReplacementNamed(context, '/student');
             }
           },
@@ -1216,6 +1255,7 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
               print(resultData);
               model.setToken(resultData["loginTeacher"]["token"]);
               model.setId(resultData["loginTeacher"]["userId"]);
+              setTeacher(resultData["loginTeacher"]["token"], resultData["loginTeacher"]["userId"]);
               Navigator.pushReplacementNamed(context, '/teacher');
             }
             else {
@@ -1266,6 +1306,7 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
               print(resultData);
               model.setToken(resultData["loginStudent"]["token"]);
               model.setId(resultData["loginStudent"]["userId"]);
+              setStudent(resultData["loginStudent"]["token"], resultData["loginStudent"]["userId"]);
               Navigator.pushReplacementNamed(context, '/student');
             }
             else {
@@ -1301,6 +1342,8 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
   }
 
   void signUp (runMutation) {
+    print('name test');
+    print(signupNameController.text);
     setState(() {
       isLoading = true;
     });
@@ -1396,6 +1439,12 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
   void selectGroupDropDown (value) {
     setState(() {
       _group = value;
+    });
+  }
+
+  void selectCollegeDropDown (value) {
+    setState(() {
+      _college = value;
     });
   }
 

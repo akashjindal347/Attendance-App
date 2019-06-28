@@ -24,28 +24,33 @@ getSavedUserId () async {
   return await preferences.getString("userId");
 }
 
-void main() {
+Future<void> main() async {
 
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  var savedToken = await prefs.getString('token');
+  var savedUserId = await prefs.getString('userId');
+  var savedUserType = await prefs.getString('userType');
 //  String savedToken = getSavedToken();
 //  String savedUserId = getSavedToken();
 
   runApp(
     ScopedModel<AppModel>(
-        model: AppModel(),
-        child: ScopedModelDescendant<AppModel>(
-            builder: (context, child, model) => MyApp(token: model.token, id: model.id)
-        )
+      model: AppModel(),
+      child: ScopedModelDescendant<AppModel>(
+        builder: (context, child, model) => MyApp(token: savedUserType != null ? savedToken : model.token, id: savedUserType != null ? savedUserId : model.id, loggedIn: savedUserType != null ? true : false, userType: savedUserType)
+      )
     )
   );
+
 }
 
 class MyApp extends StatelessWidget {
 
   final String token;
   final String id;
-  String savedToken;
-  String savedId;
-  MyApp({this.token, this.id});
+  final bool loggedIn;
+  final String userType;
+  MyApp({this.token, this.id, this.loggedIn, this.userType});
 
   @override
   Widget build(BuildContext context) {
@@ -68,8 +73,9 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: LoginPage(),
+        home: loggedIn ? (userType  == 'Student' ? Student() : Teacher()) : LoginPage(),
         routes: {
+          '/auth': (BuildContext context) => LoginPage(),
           '/teacher': (BuildContext context) => Teacher(),
           '/student': (BuildContext context) => Student(),
           '/create': (BuildContext context)=> CreateCourse(),

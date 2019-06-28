@@ -92,7 +92,7 @@ class _JoinCourseState extends State<JoinCourse> {
       },
       onCompleted: (dynamic res) {
         if (res == null) {
-          createAlertDialog(context, "Error", "No Such Course");
+          createAlertDialog(context, "Error", "No Such Course Or You are not Egligible");
         } else {
           print (res);
           showDialog(context: context, builder: (context) {

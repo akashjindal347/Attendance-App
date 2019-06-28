@@ -39,18 +39,17 @@ class _StudentState extends State<Student> {
 
   QueryOptions options = QueryOptions(document: """
     query student {
-        student {
-          name
-          group
-          branch
-          year
-          sessions {
-            _id
-          }
+      student {
+        name
+        group
+        branch
+        year
+        sessions {
+          _id
         }
       }
+    }
   """,  pollInterval: 1, fetchPolicy: FetchPolicy.noCache);
-
 
 
   QueryOptions sessionOptions = QueryOptions(document: """
@@ -288,7 +287,7 @@ class _StudentState extends State<Student> {
                       color: Colors.black,
                       borderRadius: BorderRadius.circular(32.0),
                       child: InkWell (
-                        onTap: () {alive = false; Navigator.pushReplacementNamed(context, '/joinSession');},
+                        onTap: () {alive = false; Navigator.pushNamed(context, '/joinSession');},
                         child: Padding (
                           padding: EdgeInsets.all(12.0),
                           child: Row (

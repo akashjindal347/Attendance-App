@@ -113,6 +113,7 @@ class _SessionState extends State<Session> {
                             sessionStudents ( sessionId: \$sessionId ) {
                               _id
                               name
+                              rollNumber
                             }
                           }
                         """, variables: <String, dynamic> {
@@ -172,7 +173,13 @@ class _SessionState extends State<Session> {
                                             mainAxisAlignment: MainAxisAlignment.center,
                                             crossAxisAlignment: CrossAxisAlignment.start,
                                             children: <Widget> [
-                                              Text('${sessionStudents[index]["name"]}', style: TextStyle(color: Colors.black, fontWeight: FontWeight.w700, fontSize: 34.0)),
+                                              Text('${sessionStudents[index]['name']}', style: TextStyle(color: Colors.black, fontWeight: FontWeight.w700, fontSize: 34.0)),
+                                              Text(
+                                                'RollNumber: ${sessionStudents[index]['rollNumber']}',
+                                                style: TextStyle(
+                                                  color: Colors.redAccent
+                                                )
+                                              )
                                             ],
                                           ),
                                           Material (
@@ -182,8 +189,13 @@ class _SessionState extends State<Session> {
                                               child: Padding (
                                                 padding: EdgeInsets.all(16.0),
                                                 child: RaisedButton(
+                                                  color: Colors.red,
                                                   onPressed: () { markOnValue(false, sessionStudents[index]["_id"], model.sessionId, model); },
-                                                  child: Text('Mark Absent'),
+                                                  child: Text('Mark Absent',
+                                                    style: TextStyle(
+                                                      color: Colors.white
+                                                    ),
+                                                  ),
                                                 ),
                                               )
                                             )
@@ -213,6 +225,7 @@ class _SessionState extends State<Session> {
                             courseStudents (courseId: \$courseId) {
                               _id
                               name
+                              rollNumber
                             }
                           }
                           """, variables: <String, dynamic> {
@@ -276,6 +289,12 @@ class _SessionState extends State<Session> {
                                             crossAxisAlignment: CrossAxisAlignment.start,
                                             children: <Widget> [
                                               Text('${absentees[index]["name"]}', style: TextStyle(color: Colors.black, fontWeight: FontWeight.w700, fontSize: 34.0)),
+                                              Text(
+                                                  'RollNumber: ${absentees[index]['rollNumber']}',
+                                                  style: TextStyle(
+                                                      color: Colors.redAccent
+                                                  )
+                                              )
                                             ],
                                           ),
                                           Material (
@@ -285,8 +304,14 @@ class _SessionState extends State<Session> {
                                               child: Padding (
                                                 padding: EdgeInsets.all(16.0),
                                                 child: RaisedButton(
+                                                  color: Colors.greenAccent,
                                                   onPressed: () { markOnValue(true, absentees[index]["_id"], model.sessionId, model); },
-                                                  child: Text('Mark Present'),
+                                                  child: Text(
+                                                    'Mark Present',
+                                                    style: TextStyle(
+                                                      color: Colors.white,
+                                                    ),
+                                                  ),
                                                 ),
                                               )
                                             )

@@ -25,11 +25,12 @@ class _CreateSessionState extends State<CreateSession> {
   String sessionName;
 
   int incDropDownSelect = null;
-  int validityDropDownSelect = null;
 
   String sessionId;
   String token = "Get Token";
   int attendance = 0;
+
+  TextEditingController validityController = new TextEditingController();
 
   Mutation createSession() {
     return Mutation(
@@ -100,12 +101,20 @@ class _CreateSessionState extends State<CreateSession> {
       showInSnackBar("Enter Duration");
       return;
     }
+    if(validityController.value == null) {
+      showInSnackBar("Enter Validity");
+      return;
+    }
+    if(int.parse(validityController.text) > 60) {
+      showInSnackBar("Set Validity less than 60");
+      return;
+    }
     runMutation({
       "courseToken": courseToken,
       "name": model.courseName,
       "incDelta": incDropDownSelect
     });
-    Future.delayed(Duration(milliseconds: (1000 * validityDropDownSelect)), () {
+    Future.delayed(Duration(milliseconds: (1000 * int.parse(validityController.text))), () {
       completeSession(model);
     });
   }
@@ -151,7 +160,6 @@ class _CreateSessionState extends State<CreateSession> {
   var now = new DateTime.now();
 
   List <DropdownMenuItem<int>> incDropList = [];
-  List <DropdownMenuItem<int>> validityDropList = [DropdownMenuItem(child: Text('5sec'), value: 5,), DropdownMenuItem(child: Text('10sec'), value: 10,), DropdownMenuItem(child: Text('15sec'), value: 15,), DropdownMenuItem(child: Text('20min'), value: 20,)];
 
   void loadDropDown () {
     incDropList = [];
@@ -189,7 +197,7 @@ class _CreateSessionState extends State<CreateSession> {
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
-        Timer(duration: validityDropDownSelect),
+        Timer(duration: int.parse(validityController.text)),
         RaisedButton(
           onPressed: () => Navigator.popAndPushNamed(context, '/teacher'),
           child: Text('Go Back'),
@@ -208,6 +216,7 @@ class _CreateSessionState extends State<CreateSession> {
     // TODO: implement build
     loadDropDown();
     return Scaffold(
+      resizeToAvoidBottomPadding: false,
       key: _sessionScaffoldKey,
         body: ScopedModelDescendant<AppModel>(
             builder: (context, child, model) =>  Container(
@@ -233,10 +242,10 @@ class _CreateSessionState extends State<CreateSession> {
                   children: <Widget>[
                     Text('For hours: '),
                     DropdownButton(
-                        value: incDropDownSelect,
-                        items: incDropList,
-                        hint: Text('Select'),
-                        onChanged: (value) => {selectDropDown(value)}
+                      value: incDropDownSelect,
+                      items: incDropList,
+                      hint: Text('Select'),
+                      onChanged: (value) => {selectDropDown(value)}
                     )
                   ],
                 ),
@@ -245,14 +254,18 @@ class _CreateSessionState extends State<CreateSession> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    Text('Allow till: '),
-                    DropdownButton(
-                        value: validityDropDownSelect,
-                        items: validityDropList,
-                        hint: Text('Select'),
-                        onChanged: (value) => {selectValidityDropDown(value)}
-                    )
+                    Text('Allow till: ')
                   ],
+                ),
+                Container(
+                  width: MediaQuery.of(context).size.width * 0.150,
+                  child: TextField(
+                    decoration: InputDecoration(
+                      helperText: 'in secs'
+                    ),
+                    keyboardType: TextInputType.number,
+                    controller: validityController,
+                  ),
                 ),
                 Padding(padding: EdgeInsets.only(top: 20.0)),
                 Expanded(
@@ -283,12 +296,6 @@ class _CreateSessionState extends State<CreateSession> {
   void selectDropDown (value) {
     setState(() {
       incDropDownSelect = value;
-    });
-  }
-
-  void selectValidityDropDown (value) {
-    setState(() {
-      validityDropDownSelect = value;
     });
   }
 

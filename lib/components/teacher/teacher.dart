@@ -67,31 +67,34 @@ class _TeacherState extends State<Teacher> {
               child: Container (
                 margin: EdgeInsets.symmetric(vertical: 25.0, horizontal: 54.0),
                 child: Material (
-                elevation: 8.0,
-                color: Colors.black,
-                borderRadius: BorderRadius.circular(32.0),
-                child: InkWell (
-                  onTap: ()=>Navigator.pushReplacementNamed(context, '/create'),
-                  child: Padding (
-                    padding: EdgeInsets.all(12.0),
-                    child: Row (
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget> [
-                        Icon(Icons.add, color: Colors.white),
-                        Padding(padding: EdgeInsets.only(right: 16.0)),
-                        Text('ADD A COURSE', style: TextStyle(color: Colors.white))
-                      ],
+                  elevation: 8.0,
+                  color: Colors.black,
+                  borderRadius: BorderRadius.circular(32.0),
+                  child: InkWell (
+                    onTap: ()=>Navigator.pushNamed(context, '/create'),
+                    child: Padding (
+                      padding: EdgeInsets.all(12.0),
+                      child: Row (
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget> [
+                          Icon(Icons.add, color: Colors.white),
+                          Padding(padding: EdgeInsets.only(right: 16.0)),
+                          Text('ADD A COURSE', style: TextStyle(color: Colors.white))
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              )
+                )
               ),
             ),
             Container(
               height: MediaQuery.of(context).size.height * 0.72,
-              child: Query(options: QueryOptions(document: """
+              child: Stack(
+                children: <Widget>[
+                  Container(
+                    child: Query(options: QueryOptions(document: """
                 query teacherCourses{
                   teacherCourses {
                     _id
@@ -105,79 +108,121 @@ class _TeacherState extends State<Teacher> {
                   }
                 }
                 """, variables: <String, dynamic> {}, pollInterval: 100, fetchPolicy: FetchPolicy.noCache), builder: (QueryResult result, {VoidCallback refetch}) {
-                if(result.errors != null) {
-                  return Center(
-                    child: Text(result.errors.toString()),
-                  );
-                }
-                if(result.loading) {
-                  return Center(
-                    child: Text("Loading"),
-                  );
-                }
-                List courses = result.data["teacherCourses"];
-                print(courses);
-                return ScopedModelDescendant<AppModel>(
-                  builder: (context, child, model) => ListView.builder(
-                    itemCount: result.data["teacherCourses"].length,
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: EdgeInsets.only(top: 16.0, left: 12.0, right: 12.0),
-                        child: Material(
-                          elevation: 14.0,
-                          borderRadius: BorderRadius.circular(12.0),
-                          shadowColor: Color(0x802196F3),
-                          color: Colors.white,
-                          child: InkWell(
-                            // Do onTap() if it isn't null, otherwise do print()
-                            onTap: () => showBottomSheet(context: context, builder: (builder) {
-                              return Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: <Widget>[
-                                  ListTile(
-                                    leading: Icon(Icons.music_note),
-                                    title: Text('Create Session'),
-                                    onTap: () => {createSessionScanerio(model, courses[index]['token'], courses[index]['_id'], courses[index]['name'], courses[index]["year"], courses[index]["branch"], courses[index]["group"])},
-                                  ),
-                                  ListTile(
-                                    leading: Icon(Icons.music_note),
-                                    title: Text('Attendance View'),
-                                    onTap: () => {goToAttendanceView(model, courses[index]['_id'], courses[index]['code'])},
-                                  ),
-                                  ListTile(
-                                    leading: Icon(Icons.photo_album),
-                                    title: Text('Course Information'),
-                                    onTap: () => {goToCourse(model, courses[index]['token'], courses[index]['_id'], courses[index]['code'], courses[index]["name"], courses[index]["strength"])},
-                                  ),
-                                ],
+                      if(result.errors != null) {
+                        return Center(
+                          child: Text(result.errors.toString()),
+                        );
+                      }
+                      if(result.loading) {
+                        return Center(
+                          child: Text("Loading"),
+                        );
+                      }
+                      List courses = result.data["teacherCourses"];
+                      print(courses);
+                      return ScopedModelDescendant<AppModel>(
+                          builder: (context, child, model) => ListView.builder(
+                            itemCount: result.data["teacherCourses"].length,
+                            itemBuilder: (context, index) {
+                              return Padding(
+                                padding: EdgeInsets.only(top: 16.0, left: 12.0, right: 12.0),
+                                child: Material(
+                                    elevation: 14.0,
+                                    borderRadius: BorderRadius.circular(12.0),
+                                    shadowColor: Color(0x802196F3),
+                                    color: Colors.white,
+                                    child: InkWell(
+                                      // Do onTap() if it isn't null, otherwise do print()
+                                        onTap: () => showBottomSheet(context: context, builder: (builder) {
+                                          return Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: <Widget>[
+                                              ListTile(
+                                                leading: Icon(Icons.music_note),
+                                                title: Text('Create Session'),
+                                                onTap: () => {createSessionScanerio(model, courses[index]['token'], courses[index]['_id'], courses[index]['name'], courses[index]["year"], courses[index]["branch"], courses[index]["group"])},
+                                              ),
+                                              ListTile(
+                                                leading: Icon(Icons.music_note),
+                                                title: Text('Attendance View'),
+                                                onTap: () => {goToAttendanceView(model, courses[index]['_id'], courses[index]['code'])},
+                                              ),
+                                              ListTile(
+                                                leading: Icon(Icons.photo_album),
+                                                title: Text('Course Information'),
+                                                onTap: () => {goToCourse(model, courses[index]['token'], courses[index]['_id'], courses[index]['code'], courses[index]["name"], courses[index]["strength"])},
+                                              ),
+                                            ],
+                                          );
+                                        }),
+                                        child: Container(
+                                          child: Padding (
+                                            padding: const EdgeInsets.all(24.0),
+                                            child: Column (
+                                              mainAxisSize: MainAxisSize.max,
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: <Widget> [
+                                                Text('${courses[index]["code"]}', style: TextStyle(color: Colors.black, fontWeight: FontWeight.w700, fontSize: 34.0)),
+                                                Row(
+                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                  mainAxisSize: MainAxisSize.max,
+                                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                                  children: <Widget>[
+                                                    Text('${courses[index]['name']}', style: TextStyle(color: Colors.redAccent)),
+                                                    Text('${courses[index]['group']}', style: TextStyle(color: Colors.redAccent)),
+                                                  ],
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                        )
+                                    )
+                                ),
                               );
-                            }),
-                            child: Padding (
-                              padding: const EdgeInsets.all(24.0),
-                              child: Row (
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: <Widget> [
-                                  Column (
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: <Widget> [
-                                      Text('${courses[index]["code"]}', style: TextStyle(color: Colors.black, fontWeight: FontWeight.w700, fontSize: 34.0)),
-                                      Text('${courses[index]["name"]}', style: TextStyle(color: Colors.redAccent)),
-                                    ],
-                                  ),
-                                ]
-                              ),
-                            )
+                            },
                           )
-                        ),
                       );
                     },
+                    ),
+                  ),
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height * 0.72,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: <Widget>[
+                        Padding(
+                          padding: EdgeInsets.only(right: 10.0, bottom: 10.0),
+                          child: ScopedModelDescendant<AppModel>(
+                              builder: (context, child, model) => RaisedButton(
+                                color: Colors.red,
+                                onPressed: () async {
+                                  model.setToken(null);
+                                  model.setId(null);
+                                  SharedPreferences preferences = await SharedPreferences.getInstance();
+                                  await preferences.setString('token', null);
+                                  await preferences.setString('userId', null);
+                                  await preferences.setString('userType', null);
+                                  Navigator.pushReplacementNamed(context, '/auth');
+                                },
+                                child: Text(
+                                  'Logout',
+                                  style: TextStyle(
+                                      color: Colors.white
+                                  ),
+                                ),
+                              )
+                          ),
+                        )
+                      ],
+                    ),
                   )
-                );
-              },
-              ),
-            )
+                ],
+              )
+            ),
           ],
         )
       );

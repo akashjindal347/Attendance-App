@@ -94,6 +94,12 @@ class _AttendanceState extends State<Attendance> {
                               fontSize: 34.0)
                           ),
                           Attendance(students[index]),
+                          Text(
+                            'RollNumber: ${students[index]['rollNumber']}',
+                            style: TextStyle(
+                              color: Colors.redAccent
+                            )
+                          )
                         ],
                       ),
                       Material(

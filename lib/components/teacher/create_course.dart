@@ -58,8 +58,22 @@ class _CreateCourseState extends State<CreateCourse> {
     yearDropList.add(DropdownMenuItem(child: Text('4th year'), value: 4,));
     if (_year != null) {
       if(_year == 1) {
-        branchDropList.add(DropdownMenuItem(child: Text('Group A'), value: 'A',));
-        branchDropList.add(DropdownMenuItem(child: Text('Group B'), value: 'B',));
+        branchDropList.add(DropdownMenuItem(child: Text('A'), value: 'A',));
+        branchDropList.add(DropdownMenuItem(child: Text('B'), value: 'B',));
+        branchDropList.add(DropdownMenuItem(child: Text('C'), value: 'C',));
+        branchDropList.add(DropdownMenuItem(child: Text('D'), value: 'D',));
+        branchDropList.add(DropdownMenuItem(child: Text('E'), value: 'E',));
+        branchDropList.add(DropdownMenuItem(child: Text('F'), value: 'F',));
+        branchDropList.add(DropdownMenuItem(child: Text('G'), value: 'G',));
+        branchDropList.add(DropdownMenuItem(child: Text('H'), value: 'H',));
+        branchDropList.add(DropdownMenuItem(child: Text('I'), value: 'I',));
+        branchDropList.add(DropdownMenuItem(child: Text('J'), value: 'J',));
+        branchDropList.add(DropdownMenuItem(child: Text('K'), value: 'K',));
+        branchDropList.add(DropdownMenuItem(child: Text('L'), value: 'L',));
+        branchDropList.add(DropdownMenuItem(child: Text('M'), value: 'M',));
+        branchDropList.add(DropdownMenuItem(child: Text('N'), value: 'N',));
+        branchDropList.add(DropdownMenuItem(child: Text('O'), value: 'O',));
+        branchDropList.add(DropdownMenuItem(child: Text('P'), value: 'P',));
       }
       else if(_year == 2) {
         branchDropList.add(DropdownMenuItem(child: Text('COE'), value: 'COE',));
@@ -148,30 +162,7 @@ class _CreateCourseState extends State<CreateCourse> {
             }
           }
           else {
-            if(_branch == 'A') {
-              groupDropList.add(DropdownMenuItem(child: Text('A'), value: 'A',));
-              groupDropList.add(DropdownMenuItem(child: Text('B'), value: 'B',));
-              groupDropList.add(DropdownMenuItem(child: Text('C'), value: 'C',));
-              groupDropList.add(DropdownMenuItem(child: Text('D'), value: 'D',));
-              groupDropList.add(DropdownMenuItem(child: Text('E'), value: 'E',));
-              groupDropList.add(DropdownMenuItem(child: Text('F'), value: 'F',));
-              groupDropList.add(DropdownMenuItem(child: Text('G'), value: 'G',));
-              groupDropList.add(DropdownMenuItem(child: Text('H'), value: 'H',));
-              groupDropList.add(DropdownMenuItem(child: Text('I'), value: 'I',));
-              groupDropList.add(DropdownMenuItem(child: Text('J'), value: 'J',));
-            }
-            else {
-              groupDropList.add(DropdownMenuItem(child: Text('K'), value: 'K',));
-              groupDropList.add(DropdownMenuItem(child: Text('L'), value: 'L',));
-              groupDropList.add(DropdownMenuItem(child: Text('M'), value: 'M',));
-              groupDropList.add(DropdownMenuItem(child: Text('N'), value: 'N',));
-              groupDropList.add(DropdownMenuItem(child: Text('O'), value: 'O',));
-              groupDropList.add(DropdownMenuItem(child: Text('P'), value: 'P',));
-              groupDropList.add(DropdownMenuItem(child: Text('Q'), value: 'Q',));
-              groupDropList.add(DropdownMenuItem(child: Text('R'), value: 'R',));
-              groupDropList.add(DropdownMenuItem(child: Text('S'), value: 'S',));
-              groupDropList.add(DropdownMenuItem(child: Text('T'), value: 'T',));
-            }
+            groupDropList.add(DropdownMenuItem(child: Text('${_branch} 1-5'), value: (_branch + ' 1-5')));
           }
         }
         else {
@@ -290,133 +281,133 @@ class _CreateCourseState extends State<CreateCourse> {
         List <String> subGroups = [];
         if(_year == 1) {
           for(int i = 0; i < 5; i++) {
-            subGroups.add(_group + ' ' + (i+1).toString());
+            subGroups.add(_branch + (i+1).toString());
           }
         }
         else {
           if(_group == 'COE 1-4') {
-            subGroups.add('COE 1');
-            subGroups.add('COE 2');
-            subGroups.add('COE 3');
-            subGroups.add('COE 4');
+            subGroups.add('COE-1');
+            subGroups.add('COE-2');
+            subGroups.add('COE-3');
+            subGroups.add('COE-4');
           }
           else if(_group == 'COE 5-8') {
-            subGroups.add('COE 5');
-            subGroups.add('COE 6');
-            subGroups.add('COE 7');
-            subGroups.add('COE 8');
+            subGroups.add('COE-5');
+            subGroups.add('COE-6');
+            subGroups.add('COE-7');
+            subGroups.add('COE-8');
           }
           else if(_group == 'COE 9-12') {
-            subGroups.add('COE 9');
-            subGroups.add('COE 10');
-            subGroups.add('COE 11');
-            subGroups.add('COE 12');
+            subGroups.add('COE-9');
+            subGroups.add('COE-10');
+            subGroups.add('COE-11');
+            subGroups.add('COE-12');
           }
           else if(_group == 'COE 13-16') {
-            subGroups.add('COE 13');
-            subGroups.add('COE 14');
-            subGroups.add('COE 15');
-            subGroups.add('COE 16');
+            subGroups.add('COE-13');
+            subGroups.add('COE-14');
+            subGroups.add('COE-15');
+            subGroups.add('COE-16');
           }
           else if(_group == 'COE 17-20') {
-            subGroups.add('COE 17');
-            subGroups.add('COE 18');
-            subGroups.add('COE 19');
-            subGroups.add('COE 20');
+            subGroups.add('COE-17');
+            subGroups.add('COE-18');
+            subGroups.add('COE-19');
+            subGroups.add('COE-20');
           }
           else if(_group == 'COE 17-20') {
-            subGroups.add('COE 17');
-            subGroups.add('COE 18');
-            subGroups.add('COE 19');
-            subGroups.add('COE 20');
+            subGroups.add('COE-17');
+            subGroups.add('COE-18');
+            subGroups.add('COE-19');
+            subGroups.add('COE-20');
           }
           else if(_group == 'COE 21-24') {
-            subGroups.add('COE 21');
-            subGroups.add('COE 22');
-            subGroups.add('COE 23');
-            subGroups.add('COE 24');
+            subGroups.add('COE-21');
+            subGroups.add('COE-22');
+            subGroups.add('COE-23');
+            subGroups.add('COE-24');
           }
           else if(_group == 'COE 25-28') {
-            subGroups.add('COE 25');
-            subGroups.add('COE 26');
-            subGroups.add('COE 27');
-            subGroups.add('COE 28');
+            subGroups.add('COE-25');
+            subGroups.add('COE-26');
+            subGroups.add('COE-27');
+            subGroups.add('COE-28');
           }
           else if(_group == 'BTD 1-3') {
-            subGroups.add('BTD 1');
-            subGroups.add('BTD 2');
-            subGroups.add('BTD 3');
+            subGroups.add('BTD-1');
+            subGroups.add('BTD-2');
+            subGroups.add('BTD-3');
           }
           else if(_group == 'ENC 1-4') {
-            subGroups.add('ENC 1');
-            subGroups.add('ENC 2');
-            subGroups.add('ENC 3');
-            subGroups.add('ENC 4');
+            subGroups.add('ENC-1');
+            subGroups.add('ENC-2');
+            subGroups.add('ENC-3');
+            subGroups.add('ENC-4');
           }
           else if(_group == 'ENC 5-8') {
-            subGroups.add('ENC 5');
-            subGroups.add('ENC 6');
-            subGroups.add('ENC 7');
-            subGroups.add('ENC 8');
+            subGroups.add('ENC-5');
+            subGroups.add('ENC-6');
+            subGroups.add('ENC-7');
+            subGroups.add('ENC-8');
           }
           else if(_group == 'ECE 1-4') {
-            subGroups.add('ECE 1');
-            subGroups.add('ECE 2');
-            subGroups.add('ECE 3');
-            subGroups.add('ECE 4');
+            subGroups.add('ECE-1');
+            subGroups.add('ECE-2');
+            subGroups.add('ECE-3');
+            subGroups.add('ECE-4');
           }
           else if(_group == 'ECE 5-8') {
-            subGroups.add('ECE 5');
-            subGroups.add('ECE 6');
-            subGroups.add('ECE 7');
-            subGroups.add('ECE 8');
+            subGroups.add('ECE-5');
+            subGroups.add('ECE-6');
+            subGroups.add('ECE-7');
+            subGroups.add('ECE-8');
           }
           else if(_group == 'CHE 1-2') {
-            subGroups.add('CHE 1');
-            subGroups.add('CHE 2');
+            subGroups.add('CHE-1');
+            subGroups.add('CHE-2');
           }
           else if(_group == 'EIC 1-3') {
-            subGroups.add('EIC 1');
-            subGroups.add('EIC 2');
-            subGroups.add('EIC 3');
+            subGroups.add('EIC-1');
+            subGroups.add('EIC-2');
+            subGroups.add('EIC-3');
           }
           else if(_group == 'CIE 1-4') {
-            subGroups.add('CIE 1');
-            subGroups.add('CIE 2');
-            subGroups.add('CIE 3');
-            subGroups.add('CIE 4');
+            subGroups.add('CIE-1');
+            subGroups.add('CIE-2');
+            subGroups.add('CIE-3');
+            subGroups.add('CIE-4');
           }
           else if(_group == 'MEE 1-4') {
-            subGroups.add('MEE 1');
-            subGroups.add('MEE 2');
-            subGroups.add('MEE 3');
-            subGroups.add('MEE 4');
+            subGroups.add('MEE-1');
+            subGroups.add('MEE-2');
+            subGroups.add('MEE-3');
+            subGroups.add('MEE-4');
           }
           else if(_group == 'MEE 5-8') {
-            subGroups.add('MEE 5');
-            subGroups.add('MEE 6');
-            subGroups.add('MEE 7');
-            subGroups.add('MEE 8');
+            subGroups.add('MEE-5');
+            subGroups.add('MEE-6');
+            subGroups.add('MEE-7');
+            subGroups.add('MEE-8');
           }
           else if(_group == 'MEE 9-12') {
-            subGroups.add('MEE 9');
-            subGroups.add('MEE 10');
-            subGroups.add('MEE 11');
-            subGroups.add('MEE 12');
+            subGroups.add('MEE-9');
+            subGroups.add('MEE-10');
+            subGroups.add('MEE-11');
+            subGroups.add('MEE-12');
           }
           else if(_group == 'MTX 1-2') {
-            subGroups.add('MTX 1');
-            subGroups.add('MTX 2');
+            subGroups.add('MTX-1');
+            subGroups.add('MTX-2');
           }
           else if(_group == 'MPE 1-2') {
-            subGroups.add('MPE 1');
-            subGroups.add('MPE 2');
+            subGroups.add('MPE-1');
+            subGroups.add('MPE-2');
           }
           else if(_group == 'ELE 1-4') {
-            subGroups.add('ELE 1');
-            subGroups.add('ELE 2');
-            subGroups.add('ELE 3');
-            subGroups.add('ELE 4');
+            subGroups.add('ELE-1');
+            subGroups.add('ELE-2');
+            subGroups.add('ELE-3');
+            subGroups.add('ELE-4');
           }
         }
         print('subGroups');
@@ -459,160 +450,159 @@ class _CreateCourseState extends State<CreateCourse> {
   Widget build(BuildContext context) {
     // TODO: implement build
     buildDrops();
-    return MaterialApp(
-        home: Material(
-            child: Container(
-                padding: EdgeInsets.all(30.0),
-                color: Colors.white,
-                child: Container(
-                  child: Center(
-                    child: Column(children: [
-                      Padding(padding: EdgeInsets.only(top: 40.0)),
-                      Text(
-                        'Course Details',
-                        style: TextStyle(color: Colors.blue, fontSize: 25.0),
-                      ),
-                      Padding(padding: EdgeInsets.only(top: 50.0)),
-                      TextFormField(
-                        controller: courseNameController,
-                        decoration: new InputDecoration(
-                          labelText: "Course name",
-                          fillColor: Colors.white,
-                          border: new OutlineInputBorder(
-                            borderRadius: new BorderRadius.circular(25.0),
-                            borderSide: new BorderSide(),
-                          ),
-                        //fillColor: Colors.green
-                        ),
-                        validator: (val) {
-                          if (val.length == 0) {
-                            return "Course cannot be empty";
-                          } else {
-                            return null;
-                          }
-                        },
-                        keyboardType: TextInputType.emailAddress,
-                        style: new TextStyle(
-                          fontFamily: "Poppins",
-                        ),
-                      ),
-                      Padding(padding: EdgeInsets.only(top: 20.0)),
-                      TextFormField(
-                        controller: courseCodeController,
-                        decoration: new InputDecoration(
-                          labelText: "Course Code",
-                          fillColor: Colors.white,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(25.0),
-                            borderSide: BorderSide(),
-                          ),
-                          //fillColor: Colors.green
-                        ),
-                        validator: (val) {
-                          if (val.length == 0) {
-                            return "Course No cannot be empty";
-                          } else {
-                            return null;
-                          }
-                        },
-                        keyboardType: TextInputType.emailAddress,
-                        style: new TextStyle(
-                          fontFamily: "Poppins",
-                        ),
-                      ),
-                      new Padding(padding: EdgeInsets.only(top: 20.0)),
-                      Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          Text('Special Course: '),
-                          DropdownButton(
-                              value: _specialCourse,
-                              items: specialCourseDropList,
-                              hint: Text('Select'),
-                              onChanged: (value) => {selectSpecialCourseDropDown(value)}
-                          )
-                        ],
-                      ),
-                      Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          Text('Type: '),
-                          DropdownButton(
-                              value: typeDropDownSelect,
-                              items: typeDropList,
-                              hint: Text('Select'),
-                              onChanged: (value) => {selectTypeDropDown(value)}
-                          )
-                        ],
-                      ),
-                      Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          Text('Year: '),
-                          DropdownButton(
-                              value: _year,
-                              items: yearDropList,
-                              hint: Text('Select'),
-                              onChanged: (value) => {selectYearDropDown(value)}
-                          )
-                        ],
-                      ),
-                      Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          Text('Branch: '),
-                          DropdownButton(
-                              value: _branch,
-                              items: branchDropList,
-                              hint: Text('Select'),
-                              onChanged: (value) => {selectBranchDropDown(value)}
-                          )
-                        ],
-                      ),
-                      Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          Text('Group: '),
-                          DropdownButton(
-                              value: _group,
-                              items: groupDropList,
-                              hint: Text('Select'),
-                              onChanged: (value) => {selectGroupDropDown(value)}
-                          )
-                        ],
-                      ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        createCourse(),
-                        SizedBox(width: 2,height: 50,),
-                        RaisedButton(
-                          onPressed: () => Navigator.popAndPushNamed(context, '/teacher'),
-                          child: Text('Go Back'),
-                          color: Colors.blueAccent, //specify background color for the button here
-                          colorBrightness: Brightness.dark, //specify the color brightness here, either `Brightness.dark` for darl and `Brightness.light` for light
-                          disabledColor: Colors.blueGrey, // specify color when the button is disabled
-                          highlightColor: Colors.red, //color when the button is being actively pressed, quickly fills the button and fades out after
-                          padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 5.0),
-                        )
-                      ],
+    return Scaffold(
+      resizeToAvoidBottomPadding: false,
+      body: Container(
+        padding: EdgeInsets.all(30.0),
+        color: Colors.white,
+        child: Container(
+          child: Center(
+              child: Column(children: [
+                Padding(padding: EdgeInsets.only(top: 40.0)),
+                Text(
+                  'Course Details',
+                  style: TextStyle(color: Colors.blue, fontSize: 25.0),
+                ),
+                Padding(padding: EdgeInsets.only(top: 50.0)),
+                TextFormField(
+                  controller: courseNameController,
+                  decoration: new InputDecoration(
+                    labelText: "Course name",
+                    fillColor: Colors.white,
+                    border: new OutlineInputBorder(
+                      borderRadius: new BorderRadius.circular(25.0),
+                      borderSide: new BorderSide(),
+                    ),
+                    //fillColor: Colors.green
+                  ),
+                  validator: (val) {
+                    if (val.length == 0) {
+                      return "Course cannot be empty";
+                    } else {
+                      return null;
+                    }
+                  },
+                  keyboardType: TextInputType.emailAddress,
+                  style: new TextStyle(
+                    fontFamily: "Poppins",
+                  ),
+                ),
+                Padding(padding: EdgeInsets.only(top: 20.0)),
+                TextFormField(
+                  controller: courseCodeController,
+                  decoration: new InputDecoration(
+                    labelText: "Course Code",
+                    fillColor: Colors.white,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(25.0),
+                      borderSide: BorderSide(),
+                    ),
+                    //fillColor: Colors.green
+                  ),
+                  validator: (val) {
+                    if (val.length == 0) {
+                      return "Course No cannot be empty";
+                    } else {
+                      return null;
+                    }
+                  },
+                  keyboardType: TextInputType.emailAddress,
+                  style: new TextStyle(
+                    fontFamily: "Poppins",
+                  ),
+                ),
+                new Padding(padding: EdgeInsets.only(top: 20.0)),
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Text('Special Course: '),
+                    DropdownButton(
+                        value: _specialCourse,
+                        items: specialCourseDropList,
+                        hint: Text('Select'),
+                        onChanged: (value) => {selectSpecialCourseDropDown(value)}
                     )
-                  ]
+                  ],
+                ),
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Text('Type: '),
+                    DropdownButton(
+                        value: typeDropDownSelect,
+                        items: typeDropList,
+                        hint: Text('Select'),
+                        onChanged: (value) => {selectTypeDropDown(value)}
+                    )
+                  ],
+                ),
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Text('Year: '),
+                    DropdownButton(
+                        value: _year,
+                        items: yearDropList,
+                        hint: Text('Select'),
+                        onChanged: (value) => {selectYearDropDown(value)}
+                    )
+                  ],
+                ),
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Text('Branch: '),
+                    DropdownButton(
+                        value: _branch,
+                        items: branchDropList,
+                        hint: Text('Select'),
+                        onChanged: (value) => {selectBranchDropDown(value)}
+                    )
+                  ],
+                ),
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Text('Group: '),
+                    DropdownButton(
+                        value: _group,
+                        items: groupDropList,
+                        hint: Text('Select'),
+                        onChanged: (value) => {selectGroupDropDown(value)}
+                    )
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    createCourse(),
+                    SizedBox(width: 2,height: 50,),
+                    RaisedButton(
+                      onPressed: () => Navigator.popAndPushNamed(context, '/teacher'),
+                      child: Text('Go Back'),
+                      color: Colors.blueAccent, //specify background color for the button here
+                      colorBrightness: Brightness.dark, //specify the color brightness here, either `Brightness.dark` for darl and `Brightness.light` for light
+                      disabledColor: Colors.blueGrey, // specify color when the button is disabled
+                      highlightColor: Colors.red, //color when the button is being actively pressed, quickly fills the button and fades out after
+                      padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 5.0),
+                    )
+                  ],
                 )
-              ),
-            )
-          )
-        )
+              ]
+              )
+          ),
+        ),
+      )
     );
   }
 
